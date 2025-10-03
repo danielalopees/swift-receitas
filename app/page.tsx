@@ -1,135 +1,82 @@
+'use client'
+
 import { Header } from "@/components/header"
 import { RecipeCard } from "@/components/recipe-card"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Container, Row, Col, Card, Button } from "react-bootstrap"
 import { Flame, Users, ArrowRight, Gift, CreditCard } from "lucide-react"
 import Link from "next/link"
 
 export default function Home() {
-  // Dados simulados de receitas
+  // Mock data for recipes
   const recipes = [
-    {
-      id: 1,
-      name: "Picanha Angus Uruguaia",
-      image: "/images/picanha.webp",
-      author: "Maria Silva",
-      authorAvatar: "https://i.pravatar.cc/150?img=5",
-      swiftProducts: ["Picanha Angus Swift", "Sal Grosso Swift"],
-      likes: 345,
-      isLiked: true,
-    },
-    {
-      id: 2,
-      name: "Strogonoff de Frango",
-      image: "/images/strogonoff.webp",
-      author: "João Pereira",
-      authorAvatar: "https://i.pravatar.cc/150?img=12",
-      swiftProducts: ["Creme de Leite Swift", "Frango Swift"],
-      likes: 245,
-      isLiked: false,
-    },
-    {
-      id: 3,
-      name: "Feijoada Completa",
-      image: "/images/feijoada.jpeg",
-      author: "Ana Costa",
-      authorAvatar: "https://i.pravatar.cc/150?img=9",
-      swiftProducts: ["Feijão Preto Swift", "Linguiça Swift", "Bacon Swift"],
-      likes: 189,
-      isLiked: true,
-    },
+    { id: 1, name: "Picanha Angus Uruguaia", image: "/images/picanha.webp", author: "Maria Silva", authorAvatar: "https://i.pravatar.cc/150?img=5", swiftProducts: ["Picanha Angus Swift", "Sal Grosso Swift"], likes: 345, isLiked: true },
+    { id: 2, name: "Strogonoff de Frango", image: "/images/strogonoff.webp", author: "João Pereira", authorAvatar: "https://i.pravatar.cc/150?img=12", swiftProducts: ["Creme de Leite Swift", "Frango Swift"], likes: 245, isLiked: false },
+    { id: 3, name: "Feijoada Completa", image: "/images/feijoada.jpeg", author: "Ana Costa", authorAvatar: "https://i.pravatar.cc/150?img=9", swiftProducts: ["Feijão Preto Swift", "Linguiça Swift", "Bacon Swift"], likes: 189, isLiked: true },
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-16">
-        <h2 className="text-lg font-medium text-gray-700 mb-4">Receitas em Destaque</h2>
-        <div className="space-y-4 mb-6">
-          {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
+      <main className="flex-grow-1">
+        <Container className="py-4 pb-5">
+          <h2 className="fs-5 fw-medium text-secondary mb-3">Receitas em Destaque</h2>
+          <Row className="g-3 mb-4">
+            {recipes.map((recipe) => (
+              <Col key={recipe.id} md={6} lg={4}>
+                <RecipeCard recipe={recipe} />
+              </Col>
+            ))}
+          </Row>
 
-        {/* Seção Churras Swift entre Amigos */}
-        <Card className="w-full mb-6 overflow-hidden border-red-100 shadow-md">
-          <div className="bg-gradient-to-r from-red-500 to-amber-500 p-1"></div>
-          <CardContent className="p-4">
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="mb-4 md:mb-0 md:mr-6 flex-shrink-0">
-                <div className="bg-amber-50 p-3 rounded-full">
-                  <Flame className="h-12 w-12 text-red-500" />
-                </div>
-              </div>
-              <div className="flex-1 min-w-0 text-center md:text-left">
-                <h2 className="text-xl font-bold text-red-600 flex items-center flex-wrap justify-center md:justify-start">
-                  Churras<span className="text-amber-700 ml-2 text-lg">Swift</span>
-                  <span className="text-gray-700 ml-2 text-lg">entre Amigos</span>
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  Organize churrascos incríveis, divida as compras e ganhe recompensas com a Swift!
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  <Link href="/criar-grupo">
-                    <Button className="bg-red-600 hover:bg-red-700 text-white min-h-[44px] touch-manipulation">
-                      <Users className="mr-2 h-4 w-4" />
-                      Criar Grupo
-                    </Button>
-                  </Link>
-                  <Link href="/entrar-grupo">
-                    <Button
-                      variant="outline"
-                      className="border-amber-600 text-amber-700 hover:bg-amber-50 min-h-[44px] touch-manipulation bg-transparent"
-                    >
-                      <ArrowRight className="mr-2 h-4 w-4" />
-                      Entrar em um Grupo
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Seção Swift Fidelidade */}
-        <Card className="w-full mb-6 overflow-hidden border-amber-100 shadow-md">
-          <div className="bg-gradient-to-r from-red-500 to-amber-500 p-1"></div>
-          <CardContent className="p-4">
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="mb-4 md:mb-0 md:mr-6 flex-shrink-0">
-                <div className="bg-amber-50 p-3 rounded-full">
-                  <Gift className="h-12 w-12 text-amber-600" />
-                </div>
-              </div>
-              <div className="flex-1 min-w-0 text-center md:text-left">
-                <h2 className="text-xl font-bold text-red-600 flex items-center flex-wrap justify-center md:justify-start">
-                  Swift<span className="text-amber-700 ml-2">Fidelidade</span>
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  Ganhe pontos publicando receitas ou participando de churrascos e troque por descontos nas lojas Swift!
-                </p>
-                <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  <Link href="/fidelidade/cadastro">
-                    <Button className="bg-amber-600 hover:bg-amber-700 text-white min-h-[44px] touch-manipulation">
-                      <CreditCard className="mr-2 h-4 w-4" />
-                      Cadastrar
-                    </Button>
-                  </Link>
-                  <Link href="/fidelidade/login">
-                    <Button
-                      variant="outline"
-                      className="border-amber-600 text-amber-700 hover:bg-amber-50 min-h-[44px] touch-manipulation bg-transparent"
-                    >
-                      <ArrowRight className="mr-2 h-4 w-4" />
-                      Acessar Conta
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          {/* CTA Cards */}
+          <Row className="g-3">
+            <Col md={6}>
+              <Card className="h-100 shadow-sm border-primary-subtle overflow-hidden">
+                <div className="bg-gradient-primary" style={{height: '4px'}}></div>
+                <Card.Body className="p-4">
+                  <Row className="align-items-center">
+                    <Col xs="auto" className="d-none d-sm-block">
+                      <div className="bg-warning-subtle p-3 rounded-circle">
+                        <Flame size={48} className="text-primary" />
+                      </div>
+                    </Col>
+                    <Col>
+                      <h2 className="fs-4 fw-bold text-primary">Churras<span className="text-warning fw-normal">Swift</span></h2>
+                      <p className="text-muted small mb-3">Organize churrascos, divida as compras e ganhe recompensas!</p>
+                      <div className="d-flex flex-wrap gap-2">
+                        <Link href="/criar-grupo" passHref><Button variant="primary"><Users size={16} className="me-2"/>Criar Grupo</Button></Link>
+                        <Link href="/entrar-grupo" passHref><Button variant="outline-warning"><ArrowRight size={16} className="me-2"/>Entrar em Grupo</Button></Link>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={6}>
+              <Card className="h-100 shadow-sm border-warning-subtle overflow-hidden">
+                <div className="bg-gradient-warning" style={{height: '4px'}}></div>
+                <Card.Body className="p-4">
+                  <Row className="align-items-center">
+                    <Col xs="auto" className="d-none d-sm-block">
+                      <div className="bg-warning-subtle p-3 rounded-circle">
+                        <Gift size={48} className="text-warning" />
+                      </div>
+                    </Col>
+                    <Col>
+                      <h2 className="fs-4 fw-bold text-primary">Swift<span className="text-warning fw-normal">Fidelidade</span></h2>
+                      <p className="text-muted small mb-3">Ganhe pontos e troque por descontos exclusivos nas lojas Swift!</p>
+                      <div className="d-flex flex-wrap gap-2">
+                        <Link href="/fidelidade/cadastro" passHref><Button variant="warning"><CreditCard size={16} className="me-2"/>Cadastrar</Button></Link>
+                        <Link href="/fidelidade/login" passHref><Button variant="outline-warning"><ArrowRight size={16} className="me-2"/>Acessar Conta</Button></Link>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </main>
       <Navigation />
     </div>

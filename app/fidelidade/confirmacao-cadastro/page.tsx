@@ -1,52 +1,60 @@
+'use client'
+
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap"
 import { CheckCircle, Home, User } from "lucide-react"
 import Link from "next/link"
 
 export default function ConfirmacaoCadastro() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-20 flex items-center justify-center">
-        <div className="max-w-md w-full">
-          <Card className="border-green-100 shadow-md overflow-hidden">
-            <div className="bg-gradient-to-r from-green-500 to-teal-500 h-2"></div>
-            <CardContent className="pt-8 pb-6 px-6 text-center">
-              <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                <CheckCircle className="h-10 w-10 text-green-500" />
-              </div>
-              <h1 className="text-2xl font-bold text-green-600 mb-2">Cadastro Realizado!</h1>
-              <p className="text-gray-600 mb-6">
-                Seu cadastro no Swift Fidelidade foi realizado com sucesso. Você já pode começar a acumular pontos!
-              </p>
+      <main className="flex-grow-1 d-flex align-items-center">
+        <Container>
+          <Row className="justify-content-center">
+            <Col md={6} lg={5}>
+              <Card className="shadow-sm overflow-hidden border-success-subtle">
+                <div 
+                  style={{ height: '4px' }} 
+                  className="bg-gradient-success"
+                ></div>
+                <Card.Body className="text-center p-4 p-sm-5">
+                  <div className="mx-auto bg-success-subtle rounded-circle d-flex align-items-center justify-content-center mb-4" style={{ width: '64px', height: '64px' }}>
+                    <CheckCircle size={40} className="text-success" />
+                  </div>
+                  <h1 className="fs-2 fw-bold text-success mb-2">Cadastro Realizado!</h1>
+                  <p className="text-muted mb-4">
+                    Seu cadastro no Swift Fidelidade foi realizado com sucesso. Você já pode começar a acumular pontos!
+                  </p>
 
-              <div className="space-y-3">
-                <Link href="/fidelidade/dashboard">
-                  <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
-                    <User className="mr-2 h-4 w-4" />
-                    Acessar Minha Conta
-                  </Button>
-                </Link>
-                <Link href="/">
-                  <Button variant="outline" className="w-full border-gray-300 text-gray-700 bg-transparent">
-                    <Home className="mr-2 h-4 w-4" />
-                    Voltar para Início
-                  </Button>
-                </Link>
-              </div>
+                  <div className="d-grid gap-3">
+                    <Link href="/fidelidade/dashboard" passHref>
+                      <Button variant="warning">
+                        <User size={16} className="me-2" />
+                        Acessar Minha Conta
+                      </Button>
+                    </Link>
+                    <Link href="/" passHref>
+                      <Button variant="outline-secondary">
+                        <Home size={16} className="me-2" />
+                        Voltar para Início
+                      </Button>
+                    </Link>
+                  </div>
 
-              <div className="mt-8 bg-amber-50 rounded-lg p-4 text-left">
-                <h3 className="font-medium text-amber-700 mb-2 text-sm">Bônus de boas-vindas!</h3>
-                <p className="text-sm text-gray-600">
-                  Você ganhou <span className="font-bold text-amber-600">500 pontos</span> por se cadastrar no Swift
-                  Fidelidade. Continue acumulando pontos publicando receitas e organizando churrascos!
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                  <Alert variant="warning" className="text-start mt-5">
+                    <Alert.Heading as="h3" className="fs-6">Bônus de boas-vindas!</Alert.Heading>
+                    <p className="small mb-0">
+                      Você ganhou <span className="fw-bold">500 pontos</span> por se cadastrar no Swift
+                      Fidelidade. Continue acumulando!
+                    </p>
+                  </Alert>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </main>
       <Navigation />
     </div>

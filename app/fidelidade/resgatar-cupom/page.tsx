@@ -1,12 +1,13 @@
+'use client'
+
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap"
 import { ArrowLeft, Ticket, Gift, Store, QrCode } from "lucide-react"
 import Link from "next/link"
 
 export default function ResgatarCupom() {
-  // Dados simulados do cupom
+  // Mock data for the coupon
   const cupom = {
     id: 1,
     titulo: "10% de desconto em carnes",
@@ -17,78 +18,82 @@ export default function ResgatarCupom() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-16">
-        <div className="mb-6">
-          <Link href="/fidelidade/dashboard">
-            <Button variant="ghost" className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 -ml-3">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-        </div>
-
-        <div className="max-w-md mx-auto">
-          <h1 className="text-2xl font-bold text-amber-600 mb-6 flex items-center">
-            <Ticket className="mr-2 h-6 w-6 text-amber-500" />
-            Resgatar Cupom
-          </h1>
-
-          <Card className="border-amber-100 shadow-md overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-red-500 to-amber-500 text-white">
-              <CardTitle className="text-xl">{cupom.titulo}</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div className="bg-amber-50 p-4 rounded-lg">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-gray-600">Custo:</span>
-                    <span className="font-bold text-amber-600 flex items-center">
-                      <Gift className="h-4 w-4 mr-1" />
-                      {cupom.pontos} pontos
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-gray-600">Validade:</span>
-                    <span className="text-gray-800">{cupom.validade}</span>
-                  </div>
-                  <div className="pt-2">
-                    <p className="text-sm text-gray-600">{cupom.descricao}</p>
-                  </div>
-                </div>
-
-                <div className="border-2 border-dashed border-amber-200 rounded-lg p-4 text-center">
-                  <QrCode className="h-24 w-24 sm:h-32 sm:w-32 text-amber-500 mx-auto mb-4" />
-                  <p className="font-bold text-lg text-amber-700 mb-1">Código do Cupom</p>
-                  <p className="bg-amber-100 text-amber-800 py-2 px-4 rounded-lg font-mono text-sm sm:text-lg break-all">
-                    {cupom.codigo}
-                  </p>
-                </div>
-
-                <div className="pt-4">
-                  <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
-                    <Gift className="mr-2 h-4 w-4" />
-                    Resgatar por {cupom.pontos} pontos
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="mt-6 bg-amber-50 rounded-lg p-4 border border-amber-100">
-            <h3 className="font-medium text-amber-700 mb-2 flex items-center">
-              <Store className="h-4 w-4 mr-1" />
-              Como usar este cupom
-            </h3>
-            <ol className="space-y-2 text-sm text-gray-600 list-decimal pl-5">
-              <li>Resgate o cupom clicando no botão acima</li>
-              <li>Visite uma loja física Swift</li>
-              <li>Apresente o código ou QR code ao caixa</li>
-              <li>O desconto será aplicado automaticamente na sua compra</li>
-            </ol>
+      <main className="flex-grow-1">
+        <Container className="py-4 pb-5">
+          <div className="mb-4">
+            <Link href="/fidelidade/dashboard" passHref>
+              <Button variant="link" className="text-decoration-none text-warning">
+                <ArrowLeft size={16} className="me-2" />
+                Voltar ao Dashboard
+              </Button>
+            </Link>
           </div>
-        </div>
+
+          <Row className="justify-content-center">
+            <Col md={6} lg={5}>
+              <h1 className="fs-2 fw-bold text-warning mb-4 d-flex align-items-center">
+                <Ticket size={28} className="me-2" />
+                Resgatar Cupom
+              </h1>
+
+              <Card className="shadow-sm border-warning-subtle overflow-hidden">
+                <Card.Header 
+                  className="text-white p-3"
+                  style={{ background: 'linear-gradient(to right, var(--bs-primary), var(--bs-warning))' }}
+                >
+                  <Card.Title as="h2" className="fs-5 mb-0">{cupom.titulo}</Card.Title>
+                </Card.Header>
+                <Card.Body className="p-4">
+                  <ListGroup variant="flush" className="mb-4 bg-warning-subtle rounded-3 p-3">
+                    <ListGroup.Item className="bg-transparent d-flex justify-content-between align-items-center px-0">
+                      <span className="text-muted">Custo:</span>
+                      <span className="fw-bold text-warning d-flex align-items-center"><Gift size={16} className="me-1" />{cupom.pontos} pontos</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="bg-transparent d-flex justify-content-between align-items-center px-0">
+                      <span className="text-muted">Validade:</span>
+                      <span className="text-dark">{cupom.validade}</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="bg-transparent px-0 pt-2">
+                       <p className="small text-muted mb-0">{cupom.descricao}</p>
+                    </ListGroup.Item>
+                  </ListGroup>
+
+                  <div className="border-warning border-2 rounded-3 p-4 text-center" style={{borderStyle: 'dashed'}}>
+                    <QrCode size={128} className="text-warning mx-auto mb-4" />
+                    <p className="fw-bold fs-5 text-warning-emphasis mb-1">Código do Cupom</p>
+                    <p className="bg-warning-subtle text-warning-emphasis py-2 px-3 rounded-3 font-monospace fs-5">
+                      {cupom.codigo}
+                    </p>
+                  </div>
+
+                  <div className="d-grid pt-4 mt-2">
+                    <Button variant="warning">
+                      <Gift size={16} className="me-2" />
+                      Resgatar por {cupom.pontos} pontos
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+
+              <Card className="mt-4 bg-warning-subtle border-warning-subtle">
+                <Card.Body>
+                  <h3 className="fw-semibold fs-6 text-warning-emphasis mb-3 d-flex align-items-center">
+                    <Store size={16} className="me-2" />
+                    Como usar este cupom
+                  </h3>
+                  <ListGroup as="ol" numbered variant="flush">
+                    <ListGroup.Item as="li" className="bg-transparent border-0 small p-0 pb-2">Resgate o cupom clicando no botão acima.</ListGroup.Item>
+                    <ListGroup.Item as="li" className="bg-transparent border-0 small p-0 pb-2">Visite uma loja física Swift.</ListGroup.Item>
+                    <ListGroup.Item as="li" className="bg-transparent border-0 small p-0 pb-2">Apresente o código ou QR code ao caixa.</ListGroup.Item>
+                    <ListGroup.Item as="li" className="bg-transparent border-0 small p-0">O desconto será aplicado automaticamente.</ListGroup.Item>
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </main>
       <Navigation />
     </div>

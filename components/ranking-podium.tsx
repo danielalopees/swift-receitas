@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, Container, Row, Col } from "react-bootstrap"
 import { Heart, Trophy } from "lucide-react"
 
+// Interfaces remain the same
 interface Recipe {
   id: number
   position: number
@@ -21,6 +21,7 @@ interface RankingPodiumProps {
   recipes: Recipe[]
 }
 
+// Main component updated to use Bootstrap grid system
 export function RankingPodium({ recipes }: RankingPodiumProps) {
   const sortedRecipes = [...recipes].sort((a, b) => a.position - b.position)
 
@@ -33,31 +34,33 @@ export function RankingPodium({ recipes }: RankingPodiumProps) {
   }
 
   return (
-    <div className="flex justify-center items-end gap-2 sm:gap-4 text-center mb-12 sm:mb-16">
-      {/* Second Place */}
-      <div className="w-1/3">
-        <PodiumItem recipe={second} trophyColor="silver" />
-        <div className="h-20 bg-gradient-to-b from-slate-300 to-slate-500 rounded-t-lg shadow-lg relative flex items-center justify-center border-t-4 border-slate-200">
-          <span className="text-5xl font-black text-white opacity-20">2</span>
-        </div>
-      </div>
+    <Container as="section" className="mb-5">
+      <Row className="justify-content-center align-items-end text-center">
+        {/* Second Place */}
+        <Col md={4} className="mb-3 mb-md-0">
+          <PodiumItem recipe={second} trophyColor="silver" />
+          <div style={{ height: '5rem' }} className="bg-secondary bg-gradient rounded-top-lg shadow-lg position-relative d-flex align-items-center justify-content-center border-top border-4 border-light">
+            <span className="fs-1 fw-bolder text-white text-opacity-25">2</span>
+          </div>
+        </Col>
 
-      {/* First Place */}
-      <div className="w-1/3">
-        <PodiumItem recipe={first} trophyColor="gold" isWinner />
-        <div className="h-28 bg-gradient-to-b from-red-500 to-red-700 rounded-t-lg shadow-lg relative flex items-center justify-center border-t-4 border-red-400">
-          <span className="text-5xl font-black text-white opacity-20">1</span>
-        </div>
-      </div>
+        {/* First Place */}
+        <Col md={4} className="mb-3 mb-md-0">
+          <PodiumItem recipe={first} trophyColor="gold" isWinner />
+          <div style={{ height: '7rem' }} className="bg-primary bg-gradient rounded-top-lg shadow-lg position-relative d-flex align-items-center justify-content-center border-top border-4 border-danger-subtle">
+            <span className="fs-1 fw-bolder text-white text-opacity-25">1</span>
+          </div>
+        </Col>
 
-      {/* Third Place */}
-      <div className="w-1/3">
-        <PodiumItem recipe={third} trophyColor="bronze" />
-        <div className="h-16 bg-gradient-to-b from-amber-600 to-amber-800 rounded-t-lg shadow-lg relative flex items-center justify-center border-t-4 border-amber-500">
-          <span className="text-5xl font-black text-white opacity-20">3</span>
-        </div>
-      </div>
-    </div>
+        {/* Third Place */}
+        <Col md={4} className="mb-3 mb-md-0">
+          <PodiumItem recipe={third} trophyColor="bronze" />
+          <div style={{ height: '4rem' }} className="bg-warning bg-gradient rounded-top-lg shadow-lg position-relative d-flex align-items-center justify-content-center border-top border-4 border-warning-subtle">
+            <span className="fs-1 fw-bolder text-white text-opacity-25">3</span>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
@@ -67,63 +70,62 @@ interface PodiumItemProps {
   isWinner?: boolean
 }
 
+// PodiumItem sub-component updated to use React Bootstrap
 function PodiumItem({ recipe, trophyColor, isWinner = false }: PodiumItemProps) {
   const [imgSrc, setImgSrc] = useState(recipe.image || "/placeholder.svg")
 
   const trophyColors = {
-    gold: "text-yellow-500",
-    silver: "text-gray-400",
-    bronze: "text-amber-700",
-  }
-
-  const trophyBg = {
-    gold: "bg-yellow-100",
-    silver: "bg-gray-100",
-    bronze: "bg-amber-100",
+    gold: "text-warning",
+    silver: "text-secondary",
+    bronze: "text-warning", // Using warning for bronze as well
   }
 
   return (
-    <Card className={`overflow-hidden ${isWinner ? "border-red-400 shadow-lg" : ""}`}>
-      <Link href={`/receita/${recipe.id}`}>
-        <div className="relative">
-          <Image
-            src={imgSrc}
-            alt={recipe.name}
-            width={200}
-            height={200}
-            className="w-full aspect-square object-cover"
-            onError={() => {
-              setImgSrc("/placeholder.svg")
-            }}
-          />
-          <div className={`absolute top-2 right-2 ${trophyBg[trophyColor]} rounded-full p-1 shadow-md z-10`}>
+    <Card className={`overflow-hidden border-2 ${isWinner ? "border-primary shadow-lg" : "border-0"}`}>
+      <Link href={`/receita/${recipe.id}`} className="text-decoration-none">
+        <div className="position-relative">
+          <div className="ratio ratio-1x1">
+            <Image
+              src={imgSrc}
+              alt={recipe.name}
+              fill
+              style={{ objectFit: 'cover' }}
+              className="w-100"
+              onError={() => {
+                setImgSrc("/placeholder.svg")
+              }}
+            />
+          </div>
+          <div className={`position-absolute top-0 end-0 m-2 bg-light rounded-circle p-1 shadow-sm z-1`}>
             <Trophy className={`h-5 w-5 ${trophyColors[trophyColor]}`} />
           </div>
           {isWinner && (
-            <div className="absolute top-0 left-0 w-full bg-red-500 text-white text-xs font-bold text-center py-1 z-10">
+            <div className="position-absolute top-0 start-0 w-100 bg-primary text-white small fw-bold text-center py-1 z-1">
               1º LUGAR
             </div>
           )}
         </div>
       </Link>
-      <CardContent className="p-3">
-        <Link href={`/receita/${recipe.id}`}>
-          <h3 className="font-bold text-sm line-clamp-1">{recipe.name}</h3>
+      <Card.Body>
+        <Link href={`/receita/${recipe.id}`} className="text-decoration-none text-dark">
+          <h3 className="fw-bold small text-truncate">{recipe.name}</h3>
         </Link>
-        <Link href={`/perfil/${recipe.author.replace(/\s+/g, "-").toLowerCase()}`}>
-          <div className="flex items-center mt-2">
-            <Avatar className="h-5 w-5 mr-1">
-              <AvatarImage src={recipe.authorAvatar || "/placeholder.svg?height=16&width=16"} />
-              <AvatarFallback>{recipe.author.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <span className="text-xs text-gray-600 line-clamp-1">{recipe.author}</span>
+        <Link href={`/perfil/${recipe.author.replace(/\s+/g, "-").toLowerCase()}`} className="text-decoration-none text-muted">
+          <div className="d-flex align-items-center mt-2">
+            <img 
+              src={recipe.authorAvatar || "/placeholder-user.jpg"} 
+              alt={recipe.author} 
+              className="rounded-circle me-2" 
+              style={{ width: '20px', height: '20px', objectFit: 'cover' }}
+            />
+            <span className="small text-truncate">{recipe.author}</span>
           </div>
         </Link>
-        <div className="flex items-center mt-2 text-red-500">
-          <Heart className="h-3 w-3 fill-current mr-1" />
-          <span className="text-xs font-medium">{recipe.likes.toLocaleString()}</span>
+        <div className="d-flex align-items-center mt-2 text-primary">
+          <Heart className="me-1" size={12} fill="currentColor" />
+          <span className="small fw-medium">{recipe.likes.toLocaleString()}</span>
         </div>
-      </CardContent>
+      </Card.Body>
     </Card>
   )
 }

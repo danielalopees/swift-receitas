@@ -1,7 +1,6 @@
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button, Card, Container } from "react-bootstrap"
 import { ArrowLeft, MapPin } from "lucide-react"
 import Link from "next/link"
 import { StoreMap } from "@/components/store-map"
@@ -10,33 +9,35 @@ export default function StoreMapPage({ searchParams }: { searchParams: { product
   const productId = searchParams.productId ? Number.parseInt(searchParams.productId) : undefined
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-20">
-        <div className="mb-6">
-          <Link href="/">
-            <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50 -ml-3">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-        </div>
+      <main className="flex-grow-1 py-4 pb-5">
+        <Container>
+          <div className="mb-4">
+            <Link href="/" passHref>
+              <Button variant="link" className="text-danger text-decoration-none">
+                <ArrowLeft size={16} className="me-2" />
+                Voltar
+              </Button>
+            </Link>
+          </div>
 
-        <h1 className="text-2xl font-bold text-red-600 mb-6 flex items-center">
-          <MapPin className="mr-2 h-6 w-6 text-red-500" />
-          Lojas Swift
-        </h1>
+          <h1 className="fs-2 fw-bold text-danger mb-4 d-flex align-items-center">
+            <MapPin size={24} className="text-danger me-2" />
+            Lojas Swift
+          </h1>
 
-        <Card className="border-red-100 shadow-md mb-6">
-          <CardHeader className="bg-red-50">
-            <CardTitle className="text-lg text-red-700">
-              {productId ? "Disponibilidade do Produto nas Lojas" : "Encontre a Loja Swift Mais Próxima"}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-4">
-            <StoreMap productId={productId} />
-          </CardContent>
-        </Card>
+          <Card className="border-danger-subtle shadow-sm">
+            <Card.Header className="bg-danger-subtle">
+              <Card.Title as="h2" className="fs-5 text-danger-emphasis">
+                {productId ? "Disponibilidade do Produto nas Lojas" : "Encontre a Loja Swift Mais Próxima"}
+              </Card.Title>
+            </Card.Header>
+            <Card.Body className="p-0" style={{ height: '60vh' }}>
+              <StoreMap productId={productId} />
+            </Card.Body>
+          </Card>
+        </Container>
       </main>
       <Navigation />
     </div>

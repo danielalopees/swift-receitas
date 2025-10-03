@@ -1,10 +1,8 @@
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button, Card, Badge } from "react-bootstrap"
 import { ChefHat, ArrowLeft, Clock, Utensils, Users, Flame, ThumbsUp, MessageCircle, Share2 } from "lucide-react"
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
 
 export default function ReceitaChefIA() {
   return (
@@ -12,8 +10,8 @@ export default function ReceitaChefIA() {
       <Header />
       <main className="flex-1 container mx-auto px-4 py-4 pb-16">
         <div className="mb-6">
-          <Link href="/chef-ia">
-            <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50 -ml-3">
+          <Link href="/chef-ia" passHref>
+            <Button variant="link" className="text-red-600 hover:text-red-700 hover:bg-red-50 -ml-3 text-decoration-none">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Voltar para o Chef IA
             </Button>
@@ -47,7 +45,7 @@ export default function ReceitaChefIA() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
             <Card className="border-red-100 shadow-md mb-6">
-              <CardContent className="p-4">
+              <Card.Body className="p-4">
                 <h2 className="text-lg font-bold text-red-700 mb-4 flex items-center">
                   <Utensils className="h-5 w-5 mr-2" />
                   Ingredientes
@@ -90,11 +88,11 @@ export default function ReceitaChefIA() {
                     <span>3 colheres de sopa de azeite de oliva extra virgem</span>
                   </li>
                 </ul>
-              </CardContent>
+              </Card.Body>
             </Card>
 
             <Card className="border-red-100 shadow-md mb-6">
-              <CardContent className="p-4">
+              <Card.Body className="p-4">
                 <h2 className="text-lg font-bold text-red-700 mb-4 flex items-center">
                   <Flame className="h-5 w-5 mr-2" />
                   Modo de Preparo
@@ -160,11 +158,11 @@ export default function ReceitaChefIA() {
                     <p>Fatie a fraldinha contra as fibras da carne para garantir maior maciez e sirva imediatamente.</p>
                   </li>
                 </ol>
-              </CardContent>
+              </Card.Body>
             </Card>
 
             <Card className="border-red-100 shadow-md">
-              <CardContent className="p-4">
+              <Card.Body className="p-4">
                 <h2 className="text-lg font-bold text-red-700 mb-4 flex items-center">
                   <ChefHat className="h-5 w-5 mr-2" />
                   Dicas do Chef IA
@@ -184,24 +182,24 @@ export default function ReceitaChefIA() {
                   </p>
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between">
-                  <Button variant="outline" className="text-red-600 border-red-200">
+                  <Button variant="outline-danger">
                     <ThumbsUp className="h-4 w-4 mr-2" />
                     Útil
                   </Button>
-                  <Link href="/chef-ia">
-                    <Button className="bg-red-600 hover:bg-red-700">
+                  <Link href="/chef-ia" passHref>
+                    <Button variant="danger">
                       <MessageCircle className="h-4 w-4 mr-2" />
                       Perguntar mais
                     </Button>
                   </Link>
                 </div>
-              </CardContent>
+              </Card.Body>
             </Card>
           </div>
 
           <div>
             <Card className="border-red-100 shadow-md mb-6 sticky top-4">
-              <CardContent className="p-4">
+              <Card.Body className="p-4">
                 <h2 className="text-lg font-bold text-red-700 mb-4">Informações</h2>
                 <div className="space-y-4">
                   <div>
@@ -228,10 +226,10 @@ export default function ReceitaChefIA() {
                   <div>
                     <h3 className="text-sm font-medium text-gray-500 mb-1">Método de Preparo</h3>
                     <div className="flex flex-wrap gap-2 mt-1">
-                      <Badge className="bg-red-100 text-red-700 hover:bg-red-200">
+                      <Badge bg="danger" className="text-white">
                         <Flame className="h-3 w-3 mr-1" /> Churrasco
                       </Badge>
-                      <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-200">
+                      <Badge bg="warning" className="text-white">
                         <Utensils className="h-3 w-3 mr-1" /> Forno
                       </Badge>
                     </div>
@@ -240,7 +238,7 @@ export default function ReceitaChefIA() {
 
                 <div className="mt-6 pt-4 border-t border-gray-100">
                   <h3 className="text-sm font-medium text-gray-500 mb-3">Compartilhar Receita</h3>
-                  <Button className="w-full bg-red-600 hover:bg-red-700">
+                  <Button variant="danger" className="w-full">
                     <Share2 className="h-4 w-4 mr-2" />
                     Compartilhar
                   </Button>
@@ -265,7 +263,7 @@ export default function ReceitaChefIA() {
                     </div>
                   </div>
                 </div>
-              </CardContent>
+              </Card.Body>
             </Card>
           </div>
         </div>

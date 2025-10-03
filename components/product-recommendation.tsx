@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "react-bootstrap"
 import { ShoppingCart, Check, MapPin, ChevronDown, ChevronUp, CheckCircle, XCircle } from "lucide-react"
 import type { Product } from "@/types/product"
 import { useCart } from "@/hooks/use-cart"
@@ -44,9 +44,9 @@ export function ProductRecommendation({ product, onAddToCart }: ProductRecommend
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
       <div className="flex">
-        <div className="w-20 h-20 bg-gray-100 flex-shrink-0">
+        <div className="w-12 h-12 bg-gray-100 flex-shrink-0">
           <img
-            src={product.image || "/placeholder.svg?height=80&width=80"}
+            src={product.image || "/placeholder.svg?height=48&width=48"}
             alt={product.name}
             className="w-full h-full object-cover rounded-md"
           />
@@ -60,7 +60,7 @@ export function ProductRecommendation({ product, onAddToCart }: ProductRecommend
             <span className="font-bold text-red-600">R$ {product.price.toFixed(2).replace(".", ",")}</span>
             <Button
               size="sm"
-              variant={isInCart || isAdded ? "outline" : "default"}
+              variant={isInCart || isAdded ? "outline-success" : "danger"}
               className={`h-9 px-3 min-w-[80px] touch-manipulation ${isInCart || isAdded ? "border-green-500 text-green-600" : "bg-red-600 hover:bg-red-700"}`}
               onClick={handleAddToCart}
               disabled={isInCart || isAdded}
@@ -69,7 +69,7 @@ export function ProductRecommendation({ product, onAddToCart }: ProductRecommend
                 <>
                   <Check className="h-3 w-3 mr-1" />
                   <span className="text-xs">Adicionado</span>
-                </>
+                </> 
               ) : (
                 <>
                   <ShoppingCart className="h-3 w-3 mr-1" />
@@ -90,9 +90,9 @@ export function ProductRecommendation({ product, onAddToCart }: ProductRecommend
               <span className="text-xs text-gray-600">Disponibilidade em lojas:</span>
             </div>
             <Button
-              variant="ghost"
+              variant="link"
               size="sm"
-              className="h-6 w-6 p-0"
+              className="h-6 w-6 p-0 text-decoration-none"
               onClick={() => setShowAvailability(!showAvailability)}
             >
               {showAvailability ? (

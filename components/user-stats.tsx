@@ -1,4 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
+'use client'
+
+import { Card, Row, Col } from "react-bootstrap"
 
 interface Stats {
   recipes: number
@@ -12,21 +14,23 @@ interface UserStatsProps {
 
 export function UserStats({ stats }: UserStatsProps) {
   return (
-    <Card className="overflow-hidden">
-      <CardContent className="grid grid-cols-3 gap-4">
-        <div>
-          <h4 className="font-bold text-lg">{stats.recipes}</h4>
-          <p className="text-sm text-gray-500">Receitas</p>
-        </div>
-        <div>
-          <h4 className="font-bold text-lg">{stats.likes}</h4>
-          <p className="text-sm text-gray-500">Likes</p>
-        </div>
-        <div>
-          <h4 className="font-bold text-lg">{stats.ranking}</h4>
-          <p className="text-sm text-gray-500">Ranking</p>
-        </div>
-      </CardContent>
+    <Card className="mt-3 shadow-sm">
+      <Card.Body>
+        <Row className="text-center">
+          <Col className="border-end">
+            <h4 className="fw-bold fs-5 mb-0">{stats.recipes}</h4>
+            <p className="small text-muted mb-0">Receitas</p>
+          </Col>
+          <Col className="border-end">
+            <h4 className="fw-bold fs-5 mb-0">{stats.likes}</h4>
+            <p className="small text-muted mb-0">Likes</p>
+          </Col>
+          <Col>
+            <h4 className="fw-bold fs-5 mb-0">#{stats.ranking}</h4>
+            <p className="small text-muted mb-0">Ranking</p>
+          </Col>
+        </Row>
+      </Card.Body>
     </Card>
   )
 }

@@ -4,8 +4,7 @@ import { useState } from "react"
 import { useCart } from "@/hooks/use-cart"
 import { stores } from "@/data/stores"
 import { CheckCircle, XCircle, Navigation } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button, Tabs, Tab } from "react-bootstrap"
 
 interface StoreMapProps {
   productId?: number
@@ -31,14 +30,9 @@ export function StoreMap({ productId }: StoreMapProps) {
 
   return (
     <div className="w-full">
-      <Tabs defaultValue="list" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-2 mb-4">
-          <TabsTrigger value="list">Lista</TabsTrigger>
-          <TabsTrigger value="map">Mapa</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="list" className="mt-0">
-          <div className="max-h-[300px] overflow-y-auto">
+      <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k || 'list')} className="mb-4">
+        <Tab eventKey="list" title="Lista">
+          <div className="max-h-[300px] overflow-y-auto mt-4">
             {sortedStores.map((store) => {
               // Verificar disponibilidade se um productId for fornecido
               const availability = productId ? storeAvailability.find((a) => a.storeId === store.id) : null
@@ -77,7 +71,7 @@ export function StoreMap({ productId }: StoreMapProps) {
                     <span className="text-xs text-gray-500">{store.hours}</span>
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="outline-primary"
                       className="h-8 text-xs"
                       onClick={() => {
                         // Abrir no Google Maps
@@ -93,10 +87,10 @@ export function StoreMap({ productId }: StoreMapProps) {
               )
             })}
           </div>
-        </TabsContent>
+        </Tab>
 
-        <TabsContent value="map" className="mt-0">
-          <div className="relative w-full h-[300px] bg-gray-100 rounded-lg overflow-hidden">
+        <Tab eventKey="map" title="Mapa">
+          <div className="relative w-full h-[300px] bg-gray-100 rounded-lg overflow-hidden mt-4">
             {/* Mapa simplificado - em uma implementação real, usaríamos Google Maps ou Leaflet */}
             <div className="absolute inset-0 bg-blue-50 p-4">
               <div className="w-full h-full relative border-2 border-blue-200 rounded-lg">
@@ -144,7 +138,7 @@ export function StoreMap({ productId }: StoreMapProps) {
               </div>
             </div>
           </div>
-        </TabsContent>
+        </Tab>
       </Tabs>
     </div>
   )

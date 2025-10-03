@@ -1,10 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+"use client"
+
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Image from "react-bootstrap/Image";
+import Badge from "react-bootstrap/Badge";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { ArrowLeft, ArrowRight, CheckCircle, ShoppingBag, Upload, Users } from "lucide-react"
 import Link from "next/link"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
 
@@ -49,131 +54,132 @@ export default function RegistrarCompras() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-20">
-        <div className="mb-6">
-          <Link href="/escolher-produtos">
-            <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50 -ml-3">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-red-600 flex items-center">
-              <ShoppingBag className="mr-2 h-6 w-6 text-red-500" />
-              Registrar Compras
-            </h1>
-            <p className="text-gray-600">Confirme suas compras para o churras</p>
+      <main className="flex-grow-1 py-4 pb-5">
+        <Container>
+          <div className="mb-4">
+            <Link href="/escolher-produtos" passHref>
+              <Button variant="link" className="text-danger text-decoration-none">
+                <ArrowLeft size={16} className="me-2" />
+                Voltar
+              </Button>
+            </Link>
           </div>
 
-          <Card className="bg-white shadow-sm border-red-100 p-3 w-full md:w-auto">
-            <div className="flex items-center">
-              <Users className="h-5 w-5 text-red-600 mr-2" />
-              <h3 className="font-medium text-red-600">Churras de Sábado</h3>
-              <Badge className="ml-2 bg-red-100 text-red-800 hover:bg-red-200">4 pessoas</Badge>
-            </div>
-          </Card>
-        </div>
+          <Row className="justify-content-between align-items-start mb-4 g-4">
+            <Col md="auto">
+              <div className="d-flex align-items-center">
+                <ShoppingBag size={24} className="text-danger me-2" />
+                <div>
+                  <h1 className="fs-2 fw-bold text-danger">Registrar Compras</h1>
+                  <p className="text-muted">Confirme suas compras para o churras</p>
+                </div>
+              </div>
+            </Col>
+            <Col md="auto">
+              <Card bg="white" className="shadow-sm border-danger-subtle p-2">
+                <div className="d-flex align-items-center">
+                  <Users size={20} className="text-danger me-2" />
+                  <h3 className="fw-medium text-danger fs-6 mb-0">Churras de Sábado</h3>
+                  <Badge bg="danger-subtle" text="danger-emphasis" className="ms-2">4 pessoas</Badge>
+                </div>
+              </Card>
+            </Col>
+          </Row>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {compras.map((compra) => (
-            <Card key={compra.id} className="border-red-100 shadow-md overflow-hidden">
-              <CardHeader
-                className={`${
-                  compra.status === "confirmado" ? "bg-green-500" : "bg-red-500"
-                } text-white rounded-t-lg py-3`}
-              >
-                <CardTitle className="text-lg flex items-center justify-between">
-                  <span className="flex items-center">
-                    {compra.status === "confirmado" ? (
-                      <CheckCircle className="mr-2 h-5 w-5" />
-                    ) : (
-                      <ShoppingBag className="mr-2 h-5 w-5" />
-                    )}
-                    {compra.produto}
-                  </span>
-                  <Badge
-                    className={`${
-                      compra.status === "confirmado"
-                        ? "bg-green-100 text-green-800 hover:bg-green-200"
-                        : "bg-red-100 text-red-800 hover:bg-red-200"
-                    }`}
+          <Row className="g-4">
+            {compras.map((compra) => (
+              <Col key={compra.id} md={6} lg={4}>
+                <Card className="border-danger-subtle shadow-sm h-100">
+                  <Card.Header
+                    className={`bg-gradient ${compra.status === "confirmado" ? "bg-success" : "bg-danger"} text-white`}
                   >
-                    {compra.status === "confirmado" ? "Confirmado" : "Pendente"}
-                  </Badge>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="flex items-center mb-4">
-                  <Avatar className="h-10 w-10 mr-3">
-                    <AvatarImage src={compra.responsavel.avatar || "/placeholder.svg"} />
-                    <AvatarFallback>{compra.responsavel.nome.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium text-gray-800">
-                      {compra.responsavel.isYou ? "Você" : compra.responsavel.nome}
-                    </p>
-                    <p className="text-sm text-gray-500">Responsável pela compra</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-gray-600">Valor:</span>
-                  <span className="font-bold text-red-600">R$ {compra.preco.toFixed(2).replace(".", ",")}</span>
-                </div>
-
-                {compra.status === "confirmado" ? (
-                  <div>
-                    <p className="text-sm text-gray-600 mb-2">Comprovante:</p>
-                    <div className="bg-gray-100 rounded-lg p-2 flex justify-center">
-                      <img
-                        src={compra.comprovante || "/placeholder.svg"}
-                        alt="Comprovante"
-                        className="h-24 object-cover rounded-lg border border-gray-200"
-                      />
+                    <Card.Title as="h3" className="fs-6 d-flex align-items-center justify-content-between">
+                      <span className="d-flex align-items-center">
+                        {compra.status === "confirmado" ? (
+                          <CheckCircle size={20} className="me-2" />
+                        ) : (
+                          <ShoppingBag size={20} className="me-2" />
+                        )}
+                        {compra.produto}
+                      </span>
+                      <Badge
+                        bg={compra.status === "confirmado" ? "success-subtle" : "danger-subtle"}
+                        text={compra.status === "confirmado" ? "success-emphasis" : "danger-emphasis"}
+                      >
+                        {compra.status === "confirmado" ? "Confirmado" : "Pendente"}
+                      </Badge>
+                    </Card.Title>
+                  </Card.Header>
+                  <Card.Body className="d-flex flex-column">
+                    <div className="d-flex align-items-center mb-3">
+                      <Image src={compra.responsavel.avatar || "/placeholder.svg"} roundedCircle style={{ width: '40px', height: '40px' }} className="me-3" />
+                      <div>
+                        <p className="fw-medium text-dark mb-0">
+                          {compra.responsavel.isYou ? "Você" : compra.responsavel.nome}
+                        </p>
+                        <p className="small text-muted mb-0">Responsável pela compra</p>
+                      </div>
                     </div>
-                  </div>
-                ) : compra.responsavel.isYou ? (
-                  <div className="space-y-3">
-                    <p className="text-sm text-gray-600">Anexe o comprovante da sua compra:</p>
-                    <div className="border-2 border-dashed border-red-200 rounded-lg p-4 text-center">
-                      <Upload className="h-8 w-8 text-red-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">Clique para enviar ou arraste o arquivo</p>
-                    </div>
-                    <div className="pt-2">
-                      <Input
-                        type="text"
-                        placeholder="Número do CPF na nota"
-                        className="border-red-200 focus:border-red-500 focus:ring-red-500"
-                      />
-                    </div>
-                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
-                      Confirmar Compra
-                      <CheckCircle className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="bg-red-50 rounded-lg p-3 text-center">
-                    <p className="text-sm text-red-800">Aguardando confirmação de {compra.responsavel.nome}</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
 
-        <div className="mt-8 flex justify-end">
-          <Link href="/registrar-evento">
-            <Button className="bg-red-600 hover:bg-red-700 text-white">
-              Próximo: Registrar Evento
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <span className="text-muted">Valor:</span>
+                      <span className="fw-bold text-danger fs-5">R$ {compra.preco.toFixed(2).replace(".", ",")}</span>
+                    </div>
+
+                    <div className="mt-auto">
+                      {compra.status === "confirmado" ? (
+                        <div>
+                          <p className="small text-muted mb-2">Comprovante:</p>
+                          <div className="bg-light rounded-lg p-2 d-flex justify-content-center">
+                            <Image
+                              src={compra.comprovante || "/placeholder.svg"}
+                              alt="Comprovante"
+                              fluid
+                              rounded
+                              className="border"
+                              style={{ maxHeight: '100px' }}
+                            />
+                          </div>
+                        </div>
+                      ) : compra.responsavel.isYou ? (
+                        <div className="d-grid gap-3">
+                          <p className="small text-muted mb-0">Anexe o comprovante da sua compra:</p>
+                          <div className="border-2 border-dashed border-danger-subtle rounded-lg p-4 text-center">
+                            <Upload size={32} className="text-danger-light mx-auto mb-2" />
+                            <p className="small text-muted mb-0">Clique para enviar ou arraste o arquivo</p>
+                          </div>
+                          <Form.Control
+                            type="text"
+                            placeholder="Número do CPF na nota"
+                          />
+                          <Button variant="danger" className="w-100">
+                            Confirmar Compra
+                            <CheckCircle size={16} className="ms-2" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="bg-danger-subtle rounded-lg p-3 text-center">
+                          <p className="small text-danger-emphasis mb-0">Aguardando confirmação de {compra.responsavel.nome}</p>
+                        </div>
+                      )}
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+
+          <div className="mt-4 d-flex justify-content-end">
+            <Link href="/registrar-evento" passHref>
+              <Button variant="danger">
+                Próximo: Registrar Evento
+                <ArrowRight size={16} className="ms-2" />
+              </Button>
+            </Link>
+          </div>
+        </Container>
       </main>
       <Navigation />
     </div>

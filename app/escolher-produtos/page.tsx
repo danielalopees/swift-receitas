@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+"use client"
+
+import { Button, Card, Badge, Tabs, Tab, Container, Row, Col, Image } from "react-bootstrap"
 import { ArrowLeft, ArrowRight, ShoppingCart, Users } from "lucide-react"
 import Link from "next/link"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ProdutoCard } from "@/components/produto-card"
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
@@ -78,166 +76,144 @@ export default function EscolherProdutos() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-20">
-        <div className="mb-6">
-          <Link href="/criar-grupo">
-            <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50 -ml-3">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-red-600 flex items-center">
-              <ShoppingCart className="mr-2 h-6 w-6 text-red-500" />
-              Escolher Produtos
-            </h1>
-            <p className="text-gray-600">Selecione os itens para o seu churras</p>
+      <main className="flex-grow-1 py-4 pb-5">
+        <Container>
+          <div className="mb-4">
+            <Link href="/criar-grupo" passHref>
+              <Button variant="link" className="text-danger text-decoration-none">
+                <ArrowLeft size={16} className="me-2" />
+                Voltar
+              </Button>
+            </Link>
           </div>
 
-          <Card className="bg-white shadow-sm border-red-100 p-3 w-full md:w-auto">
-            <div className="flex items-center">
-              <Users className="h-5 w-5 text-red-600 mr-2" />
-              <h3 className="font-medium text-red-600">Churras de Sábado</h3>
-              <Badge className="ml-2 bg-red-100 text-red-800 hover:bg-red-200">4 pessoas</Badge>
-            </div>
-          </Card>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <Tabs defaultValue="carnes" className="w-full">
-              <TabsList className="w-full bg-red-100 p-1 mb-6">
-                <TabsTrigger value="carnes" className="data-[state=active]:bg-red-500 data-[state=active]:text-white">
-                  Carnes
-                </TabsTrigger>
-                <TabsTrigger value="bebidas" className="data-[state=active]:bg-red-500 data-[state=active]:text-white">
-                  Bebidas
-                </TabsTrigger>
-                <TabsTrigger
-                  value="acessorios"
-                  className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
-                >
-                  Acessórios
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="carnes" className="mt-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {carnes.map((produto) => (
-                    <ProdutoCard key={produto.id} produto={produto} amigos={amigos} />
-                  ))}
+          <Row className="justify-content-between align-items-start mb-4 g-4">
+            <Col md="auto">
+              <div className="d-flex align-items-center">
+                <ShoppingCart size={24} className="text-danger me-2" />
+                <div>
+                  <h1 className="fs-2 fw-bold text-danger">Escolher Produtos</h1>
+                  <p className="text-muted">Selecione os itens para o seu churras</p>
                 </div>
-              </TabsContent>
-
-              <TabsContent value="bebidas" className="mt-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {bebidas.map((produto) => (
-                    <ProdutoCard key={produto.id} produto={produto} amigos={amigos} />
-                  ))}
+              </div>
+            </Col>
+            <Col md="auto">
+              <Card bg="white" className="shadow-sm border-danger-subtle p-2">
+                <div className="d-flex align-items-center">
+                  <Users size={20} className="text-danger me-2" />
+                  <h3 className="fw-medium text-danger fs-6 mb-0">Churras de Sábado</h3>
+                  <Badge bg="danger-subtle" text="danger-emphasis" className="ms-2">4 pessoas</Badge>
                 </div>
-              </TabsContent>
+              </Card>
+            </Col>
+          </Row>
 
-              <TabsContent value="acessorios" className="mt-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {acessorios.map((produto) => (
-                    <ProdutoCard key={produto.id} produto={produto} amigos={amigos} />
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
+          <Row className="g-4">
+            <Col lg={8}>
+              <Tabs defaultActiveKey="carnes" id="produtos-tabs" className="produtos-tabs">
+                <Tab eventKey="carnes" title="Carnes">
+                  <Row className="g-3 mt-3">
+                    {carnes.map((produto) => (
+                      <Col key={produto.id} md={6}>
+                        <ProdutoCard produto={produto} amigos={amigos} />
+                      </Col>
+                    ))}
+                  </Row>
+                </Tab>
+                <Tab eventKey="bebidas" title="Bebidas">
+                  <Row className="g-3 mt-3">
+                    {bebidas.map((produto) => (
+                      <Col key={produto.id} md={6}>
+                        <ProdutoCard produto={produto} amigos={amigos} />
+                      </Col>
+                    ))}
+                  </Row>
+                </Tab>
+                <Tab eventKey="acessorios" title="Acessórios">
+                  <Row className="g-3 mt-3">
+                    {acessorios.map((produto) => (
+                      <Col key={produto.id} md={6}>
+                        <ProdutoCard produto={produto} amigos={amigos} />
+                      </Col>
+                    ))}
+                  </Row>
+                </Tab>
+              </Tabs>
+            </Col>
+            <Col lg={4}>
+              <Card className="border-danger-subtle shadow-sm position-sticky" style={{ top: '1rem' }}>
+                <Card.Header className="bg-gradient bg-danger text-white">
+                  <Card.Title as="h2" className="fs-5 d-flex align-items-center">
+                    <ShoppingCart size={20} className="me-2" />
+                    Resumo do Pedido
+                  </Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <div className="d-grid gap-3">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex align-items-center">
+                        <div className="bg-danger rounded-circle me-2" style={{ width: '8px', height: '8px' }}></div>
+                        <span className="small">Picanha Premium Swift</span>
+                      </div>
+                      <span className="fw-medium small">R$ 89,90</span>
+                    </div>
+                    <div className="ps-4 small text-muted d-flex align-items-center">
+                      <Image src="https://i.pravatar.cc/150?img=1" roundedCircle style={{ width: '16px', height: '16px' }} className="me-1" />
+                      <span>João Silva</span>
+                    </div>
 
-          <div>
-            <Card className="border-red-100 shadow-md sticky top-4">
-              <CardHeader className="bg-gradient-to-r from-red-500 to-amber-500 text-white rounded-t-lg">
-                <CardTitle className="text-xl flex items-center">
-                  <ShoppingCart className="mr-2 h-5 w-5" />
-                  Resumo do Pedido
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <div className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
-                        <span className="text-sm">Picanha Premium Swift</span>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex align-items-center">
+                        <div className="bg-danger rounded-circle me-2" style={{ width: '8px', height: '8px' }}></div>
+                        <span className="small">Cerveja Especial</span>
                       </div>
-                      <span className="font-medium">R$ 89,90</span>
+                      <span className="fw-medium small">R$ 29,90</span>
                     </div>
-                    <div className="pl-4 text-xs text-gray-500">
-                      <div className="flex items-center">
-                        <Avatar className="h-4 w-4 mr-1">
-                          <AvatarImage src="https://i.pravatar.cc/150?img=1" />
-                          <AvatarFallback>J</AvatarFallback>
-                        </Avatar>
-                        <span>João Silva</span>
-                      </div>
+                    <div className="ps-4 small text-muted d-flex align-items-center">
+                      <Image src="https://i.pravatar.cc/150?img=5" roundedCircle style={{ width: '16px', height: '16px' }} className="me-1" />
+                      <span>Maria Oliveira</span>
                     </div>
 
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
-                        <span className="text-sm">Cerveja Especial</span>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex align-items-center">
+                        <div className="bg-danger rounded-circle me-2" style={{ width: '8px', height: '8px' }}></div>
+                        <span className="small">Carvão Premium</span>
                       </div>
-                      <span className="font-medium">R$ 29,90</span>
+                      <span className="fw-medium small">R$ 19,90</span>
                     </div>
-                    <div className="pl-4 text-xs text-gray-500">
-                      <div className="flex items-center">
-                        <Avatar className="h-4 w-4 mr-1">
-                          <AvatarImage src="https://i.pravatar.cc/150?img=5" />
-                          <AvatarFallback>M</AvatarFallback>
-                        </Avatar>
-                        <span>Maria Oliveira</span>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 bg-red-500 rounded-full mr-2"></div>
-                        <span className="text-sm">Carvão Premium</span>
-                      </div>
-                      <span className="font-medium">R$ 19,90</span>
-                    </div>
-                    <div className="pl-4 text-xs text-gray-500">
-                      <div className="flex items-center">
-                        <Avatar className="h-4 w-4 mr-1">
-                          <AvatarImage src="https://i.pravatar.cc/150?img=8" />
-                          <AvatarFallback>V</AvatarFallback>
-                        </Avatar>
-                        <span>Você</span>
-                      </div>
+                    <div className="ps-4 small text-muted d-flex align-items-center">
+                      <Image src="https://i.pravatar.cc/150?img=8" roundedCircle style={{ width: '16px', height: '16px' }} className="me-1" />
+                      <span>Você</span>
                     </div>
                   </div>
 
-                  <div className="border-t border-dashed border-gray-200 pt-4 mt-4">
-                    <div className="flex justify-between items-center font-medium">
+                  <hr className="my-3 border-dashed" />
+
+                  <div className="d-grid gap-1">
+                    <div className="d-flex justify-content-between align-items-center fw-medium">
                       <span>Total</span>
-                      <span className="text-red-600">R$ 139,70</span>
+                      <span className="text-danger">R$ 139,70</span>
                     </div>
-                    <div className="flex justify-between items-center text-sm text-gray-500 mt-1">
+                    <div className="d-flex justify-content-between align-items-center small text-muted">
                       <span>Por pessoa (média)</span>
                       <span>R$ 34,93</span>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-              <CardFooter className="bg-red-50 rounded-b-lg">
-                <Link href="/registrar-compras" className="w-full">
-                  <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
-                    Continuar
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          </div>
-        </div>
+                </Card.Body>
+                <Card.Footer className="bg-light">
+                  <Link href="/registrar-compras" passHref>
+                    <Button variant="danger" className="w-100">
+                      Continuar
+                      <ArrowRight size={16} className="ms-2" />
+                    </Button>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </main>
       <Navigation />
     </div>

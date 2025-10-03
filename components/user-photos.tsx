@@ -1,8 +1,7 @@
 "use client"
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, Button } from "react-bootstrap"
 import { Heart, Share2, Calendar } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
 interface Photo {
@@ -22,7 +21,7 @@ export function UserPhotos({ photos }: UserPhotosProps) {
     <div>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-md font-medium text-gray-700">Minha Galeria de Fotos</h3>
-        <Button variant="outline" size="sm" className="text-red-600 border-red-200 bg-red-50">
+        <Button variant="outline-danger" size="sm" className="bg-red-50">
           Adicionar Foto
         </Button>
       </div>
@@ -55,31 +54,31 @@ function PhotoCard({ photo }: PhotoCardProps) {
   return (
     <Card className="overflow-hidden">
       <div className="relative">
-        <img src={photo.image || "/placeholder.svg"} alt={photo.title} className="w-full h-40 object-cover" />
+        <Card.Img variant="top" src={photo.image || "/placeholder.svg"} alt={photo.title} className="h-40 object-cover" />
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
           <h3 className="text-white font-bold text-sm line-clamp-1">{photo.title}</h3>
         </div>
       </div>
-      <CardContent className="p-2">
+      <Card.Body className="p-2">
         <div className="flex items-center text-xs text-gray-500">
           <Calendar className="h-3 w-3 mr-1" />
           {photo.date}
         </div>
-      </CardContent>
-      <CardFooter className="p-2 flex justify-between">
+      </Card.Body>
+      <Card.Footer className="p-2 flex justify-between">
         <Button
-          variant="ghost"
+          variant="link"
           size="sm"
-          className={`flex items-center gap-1 p-1 ${isLiked ? "text-red-500" : "text-gray-600"}`}
+          className={`flex items-center gap-1 p-1 text-decoration-none ${isLiked ? "text-danger" : "text-secondary"}`}
           onClick={handleLike}
         >
           <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
           {likes}
         </Button>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1 p-1 text-gray-600">
+        <Button variant="link" size="sm" className="flex items-center gap-1 p-1 text-secondary text-decoration-none">
           <Share2 className="h-4 w-4" />
         </Button>
-      </CardFooter>
+      </Card.Footer>
     </Card>
   )
 }

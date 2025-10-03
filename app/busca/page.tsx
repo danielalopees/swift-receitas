@@ -1,10 +1,8 @@
+'use client'
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Form, Button, Tabs, Tab, Image } from "react-bootstrap"
 import { Search } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function BuscaPage() {
   // Dados simulados de chefs
@@ -22,7 +20,7 @@ export default function BuscaPage() {
         <h2 className="text-lg font-medium text-gray-700 mb-4">Buscar Receitas</h2>
 
         <div className="relative mb-6">
-          <Input
+          <Form.Control
             type="text"
             placeholder="Buscar receitas, ingredientes ou chefs..."
             className="pl-10 pr-4 py-2 border-gray-300 rounded-lg"
@@ -30,15 +28,9 @@ export default function BuscaPage() {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
         </div>
 
-        <Tabs defaultValue="categorias" className="mb-6">
-          <TabsList className="grid grid-cols-3 mb-4">
-            <TabsTrigger value="categorias">Categorias</TabsTrigger>
-            <TabsTrigger value="ingredientes">Ingredientes</TabsTrigger>
-            <TabsTrigger value="chefs">Chefs</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="categorias">
-            <div className="grid grid-cols-2 gap-3">
+        <Tabs defaultActiveKey="categorias" className="mb-6">
+          <Tab eventKey="categorias" title="Categorias">
+            <div className="grid grid-cols-2 gap-3 mt-4">
               <CategoryButton name="Carnes" image="/images/picanha.webp" />
               <CategoryButton name="Aves" image="/images/strogonoff.webp" />
               <CategoryButton name="Massas" image="/images/lasanha.jpeg" />
@@ -46,10 +38,10 @@ export default function BuscaPage() {
               <CategoryButton name="Sobremesas" image="/images/bolo-chocolate.jpeg" />
               <CategoryButton name="Frutos do Mar" image="/images/risoto-camarao.jpeg" />
             </div>
-          </TabsContent>
+          </Tab>
 
-          <TabsContent value="ingredientes">
-            <div className="grid grid-cols-2 gap-3">
+          <Tab eventKey="ingredientes" title="Ingredientes">
+            <div className="grid grid-cols-2 gap-3 mt-4">
               <IngredientButton name="Picanha" />
               <IngredientButton name="Frango" />
               <IngredientButton name="Carne Moída" />
@@ -57,30 +49,30 @@ export default function BuscaPage() {
               <IngredientButton name="Camarão" />
               <IngredientButton name="Chocolate" />
             </div>
-          </TabsContent>
+          </Tab>
 
-          <TabsContent value="chefs">
-            <div className="grid grid-cols-2 gap-3">
+          <Tab eventKey="chefs" title="Chefs">
+            <div className="grid grid-cols-2 gap-3 mt-4">
               {chefs.map((chef, index) => (
                 <ChefButton key={index} name={chef.name} recipes={chef.recipes} avatar={chef.avatar} />
               ))}
             </div>
-          </TabsContent>
+          </Tab>
         </Tabs>
 
         <div>
           <h3 className="text-md font-medium text-gray-700 mb-3">Buscas Recentes</h3>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" className="rounded-full">
+            <Button variant="outline-secondary" size="sm" className="rounded-full">
               Picanha ao ponto
             </Button>
-            <Button variant="outline" size="sm" className="rounded-full">
+            <Button variant="outline-secondary" size="sm" className="rounded-full">
               Strogonoff de frango
             </Button>
-            <Button variant="outline" size="sm" className="rounded-full">
+            <Button variant="outline-secondary" size="sm" className="rounded-full">
               Receitas rápidas
             </Button>
-            <Button variant="outline" size="sm" className="rounded-full">
+            <Button variant="outline-secondary" size="sm" className="rounded-full">
               Sobremesas
             </Button>
           </div>
@@ -93,7 +85,7 @@ export default function BuscaPage() {
 
 function CategoryButton({ name, image }: { name: string; image: string }) {
   return (
-    <Button variant="outline" className="h-24 relative overflow-hidden p-0 w-full">
+    <Button variant="outline-secondary" className="h-16 relative overflow-hidden p-0 w-full">
       <div className="absolute inset-0 bg-black/40 z-10"></div>
       <img src={image || "/placeholder.svg"} alt={name} className="absolute inset-0 w-full h-full object-cover" />
       <span className="relative z-20 text-white font-medium">{name}</span>
@@ -103,7 +95,7 @@ function CategoryButton({ name, image }: { name: string; image: string }) {
 
 function IngredientButton({ name }: { name: string }) {
   return (
-    <Button variant="outline" className="justify-start h-12 w-full">
+    <Button variant="outline-secondary" className="justify-start h-12 w-full">
       <span>{name}</span>
     </Button>
   )
@@ -111,11 +103,8 @@ function IngredientButton({ name }: { name: string }) {
 
 function ChefButton({ name, recipes, avatar }: { name: string; recipes: number; avatar: string }) {
   return (
-    <Button variant="outline" className="justify-start h-16 w-full flex items-center">
-      <Avatar className="h-10 w-10 mr-3">
-        <AvatarImage src={avatar || "/placeholder.svg"} />
-        <AvatarFallback>{name.charAt(0)}</AvatarFallback>
-      </Avatar>
+    <Button variant="outline-secondary" className="justify-start h-16 w-full flex items-center text-left">
+      <Image src={avatar || "/placeholder.svg"} roundedCircle className="h-10 w-10 mr-3" />
       <div className="flex flex-col items-start">
         <span className="font-medium">{name}</span>
         <span className="text-xs text-gray-500">{recipes} receitas</span>

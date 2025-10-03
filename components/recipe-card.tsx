@@ -1,12 +1,9 @@
-"use client"
+'use client'
 
-import { Heart, Share2, Tag } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { useState } from "react"
 import Link from "next/link"
+import { Card, Badge, Button } from "react-bootstrap"
+import { Heart, Share2, Tag } from "lucide-react"
 
 interface RecipeCardProps {
   recipe: {
@@ -26,73 +23,69 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   const [likes, setLikes] = useState(recipe.likes)
 
   const handleLike = () => {
-    if (isLiked) {
-      setLikes(likes - 1)
-    } else {
-      setLikes(likes + 1)
-    }
     setIsLiked(!isLiked)
+    setLikes(isLiked ? likes - 1 : likes + 1)
   }
 
   return (
-    <Card className="overflow-hidden border-red-100 shadow-md">
-      <Link href={`/receita/${recipe.id}`}>
-        <div className="relative">
-          <img
-            src={recipe.image || "/placeholder.svg"}
-            alt={recipe.name}
-            className="w-full h-48 sm:h-64 object-cover"
+    <Card className="h-100 shadow-sm border-primary-subtle">
+      <div className="position-relative">
+        <Link href={`/receita/${recipe.id}`}>
+          <Card.Img 
+            variant="top" 
+            src={recipe.image || "/placeholder.svg"} 
+            alt={recipe.name} 
             loading="lazy"
+            style={{ height: '220px', objectFit: 'cover' }}
           />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-            <h3 className="text-white font-bold text-lg">{recipe.name}</h3>
+          <div 
+            className="position-absolute bottom-0 start-0 end-0 p-3 text-white"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }}
+          >
+            <Card.Title as="h3" className="fs-5 fw-bold">{recipe.name}</Card.Title>
           </div>
-        </div>
-      </Link>
-      <CardContent className="p-3">
-        <div className="flex items-center mb-3">
-          <Link href={`/perfil/${recipe.author.replace(/\s+/g, "-").toLowerCase()}`}>
-            <div className="flex items-center">
-              <Avatar className="h-6 w-6 mr-2">
-                <AvatarImage src={recipe.authorAvatar || "/placeholder.svg?height=24&width=24"} />
-                <AvatarFallback>{recipe.author.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <span className="text-sm text-gray-600">{recipe.author}</span>
-            </div>
+        </Link>
+      </div>
+      <Card.Body className="p-3">
+        <div className="d-flex align-items-center mb-3">
+          <Link href={`/perfil/${recipe.author.replace(/\s+/g, "-").toLowerCase()}`} className="d-flex align-items-center text-decoration-none text-muted">
+            <img
+              src={recipe.authorAvatar || "/placeholder-user.jpg"}
+              alt={recipe.author}
+              className="rounded-circle me-2"
+              style={{ width: '24px', height: '24px', objectFit: 'cover' }}
+            />
+            <span className="small">{recipe.author}</span>
           </Link>
         </div>
-        <div className="flex flex-wrap gap-1 mb-2">
+        <div className="d-flex flex-wrap gap-1 mb-2">
           {recipe.swiftProducts.map((product, index) => (
-            <Badge
-              key={index}
-              variant="outline"
-              className="flex items-center gap-1 bg-red-50 text-red-600 border-red-200"
-            >
-              <Tag className="h-3 w-3" />
+            <Badge key={index} pill bg="primary-subtle" text="primary-emphasis" className="d-flex align-items-center gap-1 fw-normal">
+              <Tag size={12} />
               {product}
             </Badge>
           ))}
         </div>
-      </CardContent>
-      <CardFooter className="p-3 pt-0 flex justify-between">
+      </Card.Body>
+      <Card.Footer className="p-3 pt-0 bg-transparent border-top-0 d-flex justify-content-between">
         <Button
-          variant="ghost"
+          variant="link"
           size="sm"
-          className={`flex items-center gap-1 min-h-[40px] touch-manipulation ${isLiked ? "text-red-500" : "text-gray-600"}`}
+          className={`text-decoration-none d-flex align-items-center gap-1 ${isLiked ? "text-primary" : "text-secondary"}`}
           onClick={handleLike}
         >
-          <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
+          <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
           {likes}
         </Button>
         <Button
-          variant="ghost"
+          variant="link"
           size="sm"
-          className="flex items-center gap-1 text-gray-600 min-h-[40px] touch-manipulation"
+          className="text-decoration-none text-secondary d-flex align-items-center gap-1"
         >
-          <Share2 className="h-4 w-4" />
+          <Share2 size={16} />
           Compartilhar
         </Button>
-      </CardFooter>
+      </Card.Footer>
     </Card>
   )
 }

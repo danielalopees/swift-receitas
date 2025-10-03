@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { Card, CardFooter } from "@/components/ui/card"
-import { Heart, Share2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import Link from "next/link"
+import { Row, Col, Card, Button } from "react-bootstrap"
+import { Heart, Share2 } from "lucide-react"
 
+// Interfaces remain the same
 interface Recipe {
   id: number
   name: string
@@ -18,16 +18,20 @@ interface UserRecipesProps {
   recipes: Recipe[]
 }
 
+// Main component now uses Bootstrap grid
 export function UserRecipes({ recipes }: UserRecipesProps) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <Row className="g-3">
       {recipes.map((recipe) => (
-        <RecipeCard key={recipe.id} recipe={recipe} />
+        <Col key={recipe.id} xs={6} md={4} lg={3}>
+          <RecipeCard recipe={recipe} />
+        </Col>
       ))}
-    </div>
+    </Row>
   )
 }
 
+// Local RecipeCard component converted to Bootstrap
 interface RecipeCardProps {
   recipe: Recipe
 }
@@ -37,38 +41,42 @@ function RecipeCard({ recipe }: RecipeCardProps) {
   const [likes, setLikes] = useState(recipe.likes)
 
   const handleLike = () => {
-    if (isLiked) {
-      setLikes(likes - 1)
-    } else {
-      setLikes(likes + 1)
-    }
     setIsLiked(!isLiked)
+    setLikes(isLiked ? likes - 1 : likes + 1)
   }
 
   return (
-    <Card className="overflow-hidden">
-      <Link href={`/receita/${recipe.id}`}>
-        <div className="relative">
-          <img src={recipe.image || "/placeholder.svg"} alt={recipe.name} className="w-full h-32 object-cover" />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
-            <h3 className="text-white font-bold text-sm line-clamp-1">{recipe.name}</h3>
-          </div>
+    <Card className="h-100 shadow-sm overflow-hidden">
+      <Link href={`/receita/${recipe.id}`} className="text-decoration-none">
+        <div className="position-relative">
+            <Card.Img 
+                variant="top" 
+                src={recipe.image || "/placeholder.svg"} 
+                alt={recipe.name} 
+                style={{ height: '128px', objectFit: 'cover' }}
+            />
+            <div 
+                className="position-absolute bottom-0 start-0 end-0 p-2 text-white"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}
+            >
+                <h3 className="fw-bold small text-truncate mb-0">{recipe.name}</h3>
+            </div>
         </div>
       </Link>
-      <CardFooter className="p-2 flex justify-between">
+      <Card.Footer className="p-2 d-flex justify-content-between align-items-center">
         <Button
-          variant="ghost"
+          variant="link"
           size="sm"
-          className={`flex items-center gap-1 p-1 ${isLiked ? "text-red-500" : "text-gray-600"}`}
+          className={`text-decoration-none d-flex align-items-center p-1 ${isLiked ? "text-primary" : "text-secondary"}`}
           onClick={handleLike}
         >
-          <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
-          {likes}
+          <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
+          <span className="small ms-1">{likes}</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex items-center gap-1 p-1 text-gray-600">
-          <Share2 className="h-4 w-4" />
+        <Button variant="link" size="sm" className="text-secondary p-1">
+          <Share2 size={16} />
         </Button>
-      </CardFooter>
+      </Card.Footer>
     </Card>
   )
 }

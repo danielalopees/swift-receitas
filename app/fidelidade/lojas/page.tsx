@@ -1,114 +1,85 @@
+'use client'
+
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Container, Row, Col, Card, Button, Form, InputGroup, Badge, ListGroup } from "react-bootstrap"
 import { ArrowLeft, MapPin, Phone, Clock, Navigation2 } from "lucide-react"
 import Link from "next/link"
-import { Input } from "@/components/ui/input"
 
 export default function Lojas() {
-  // Dados simulados de lojas
+  // Mock data for stores
   const lojas = [
-    {
-      id: 1,
-      nome: "Swift Shopping Morumbi",
-      endereco: "Av. Roque Petroni Júnior, 1089 - Morumbi, São Paulo - SP",
-      telefone: "(11) 5555-1234",
-      horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h",
-      distancia: "2,5 km",
-    },
-    {
-      id: 2,
-      nome: "Swift Shopping Ibirapuera",
-      endereco: "Av. Ibirapuera, 3103 - Moema, São Paulo - SP",
-      telefone: "(11) 5555-5678",
-      horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h",
-      distancia: "4,8 km",
-    },
-    {
-      id: 3,
-      nome: "Swift Shopping Eldorado",
-      endereco: "Av. Rebouças, 3970 - Pinheiros, São Paulo - SP",
-      telefone: "(11) 5555-9012",
-      horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h",
-      distancia: "6,2 km",
-    },
+    { id: 1, nome: "Swift Shopping Morumbi", endereco: "Av. Roque Petroni Júnior, 1089 - Morumbi, São Paulo - SP", telefone: "(11) 5555-1234", horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h", distancia: "2,5 km" },
+    { id: 2, nome: "Swift Shopping Ibirapuera", endereco: "Av. Ibirapuera, 3103 - Moema, São Paulo - SP", telefone: "(11) 5555-5678", horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h", distancia: "4,8 km" },
+    { id: 3, nome: "Swift Shopping Eldorado", endereco: "Av. Rebouças, 3970 - Pinheiros, São Paulo - SP", telefone: "(11) 5555-9012", horario: "Seg a Sáb: 10h às 22h | Dom: 12h às 20h", distancia: "6,2 km" },
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-16">
-        <div className="mb-6">
-          <Link href="/fidelidade/dashboard">
-            <Button variant="ghost" className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 -ml-3">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-        </div>
-
-        <h1 className="text-2xl font-bold text-amber-600 mb-6 flex items-center">
-          <MapPin className="mr-2 h-6 w-6 text-amber-500" />
-          Lojas Swift
-        </h1>
-
-        <div className="mb-6">
-          <div className="relative">
-            <Input
-              placeholder="Buscar por CEP, cidade ou bairro"
-              className="pl-10 border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-            />
-            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+      <main className="flex-grow-1">
+        <Container className="py-4 pb-5">
+          <div className="mb-4">
+            <Link href="/fidelidade/dashboard" passHref>
+              <Button variant="link" className="text-decoration-none text-warning">
+                <ArrowLeft size={16} className="me-2" />
+                Voltar ao Dashboard
+              </Button>
+            </Link>
           </div>
-        </div>
 
-        <div className="space-y-4">
-          {lojas.map((loja) => (
-            <Card key={loja.id} className="border-amber-100 shadow-md">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg text-amber-700 flex justify-between items-center">
-                  <span>{loja.nome}</span>
-                  <Badge distancia={loja.distancia} />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-2">
-                  <div className="flex items-start">
-                    <MapPin className="h-4 w-4 text-gray-500 mt-1 mr-2 flex-shrink-0" />
-                    <p className="text-sm text-gray-600 break-words">{loja.endereco}</p>
-                  </div>
-                  <div className="flex items-center">
-                    <Phone className="h-4 w-4 text-gray-500 mr-2 flex-shrink-0" />
-                    <p className="text-sm text-gray-600">{loja.telefone}</p>
-                  </div>
-                  <div className="flex items-start">
-                    <Clock className="h-4 w-4 text-gray-500 mt-1 mr-2 flex-shrink-0" />
-                    <p className="text-sm text-gray-600">{loja.horario}</p>
-                  </div>
-                  <div className="pt-2 flex justify-end">
-                    <Button className="bg-amber-600 hover:bg-amber-700 text-white">
-                      <Navigation2 className="mr-2 h-4 w-4" />
+          <h1 className="fs-2 fw-bold text-warning mb-4 d-flex align-items-center">
+            <MapPin size={28} className="me-2" />
+            Lojas Swift
+          </h1>
+
+          <Row className="justify-content-center mb-4">
+            <Col md={8}>
+              <InputGroup>
+                <InputGroup.Text><MapPin size={16} className="text-muted" /></InputGroup.Text>
+                <Form.Control placeholder="Buscar por CEP, cidade ou bairro" />
+              </InputGroup>
+            </Col>
+          </Row>
+
+          <div className="d-grid gap-3">
+            {lojas.map((loja) => (
+              <Card key={loja.id} className="shadow-sm border-warning-subtle">
+                <Card.Header className="d-flex justify-content-between align-items-center">
+                  <Card.Title as="h3" className="fs-6 fw-semibold text-warning-emphasis mb-0">{loja.nome}</Card.Title>
+                  <Badge bg="warning-subtle" text="warning-emphasis" className="d-flex align-items-center">
+                    <Navigation2 size={12} className="me-1" />
+                    {loja.distancia}
+                  </Badge>
+                </Card.Header>
+                <Card.Body>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item className="d-flex align-items-start border-0 px-0">
+                      <MapPin size={20} className="text-muted me-2 mt-1 flex-shrink-0" />
+                      <span className="small text-muted">{loja.endereco}</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex align-items-start border-0 px-0">
+                      <Phone size={16} className="text-muted me-2 mt-1 flex-shrink-0" />
+                      <span className="small text-muted">{loja.telefone}</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex align-items-start border-0 px-0">
+                      <Clock size={16} className="text-muted me-2 mt-1 flex-shrink-0" />
+                      <span className="small text-muted">{loja.horario}</span>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card.Body>
+                <Card.Footer className="text-end">
+                    <Button variant="warning">
+                      <Navigation2 size={16} className="me-2" />
                       Como Chegar
                     </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </Card.Footer>
+              </Card>
+            ))}
+          </div>
+        </Container>
       </main>
       <Navigation />
-    </div>
-  )
-}
-
-// Componente Badge para mostrar a distância
-function Badge({ distancia }: { distancia: string }) {
-  return (
-    <div className="bg-amber-100 text-amber-700 text-xs font-medium px-2 py-1 rounded-full flex items-center">
-      <Navigation2 className="h-3 w-3 mr-1" />
-      {distancia}
     </div>
   )
 }

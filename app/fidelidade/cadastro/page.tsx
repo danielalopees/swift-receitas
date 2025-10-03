@@ -1,141 +1,116 @@
+'use client'
+
 import { Header } from "@/components/header"
 import { Navigation } from "@/components/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { Container, Row, Col, Card, Form, Button, InputGroup, ListGroup } from "react-bootstrap"
 import { ArrowLeft, User, Mail, Phone, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 
 export default function CadastroFidelidade() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="d-flex flex-column min-vh-100 bg-light-subtle">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-4 pb-16">
-        <div className="mb-6">
-          <Link href="/">
-            <Button variant="ghost" className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 -ml-3">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar
-            </Button>
-          </Link>
-        </div>
-
-        <div className="max-w-md mx-auto">
-          <h1 className="text-2xl font-bold text-amber-600 mb-6 flex items-center">
-            <User className="mr-2 h-6 w-6 text-amber-500" />
-            Cadastro Swift Fidelidade
-          </h1>
-
-          <Card className="border-amber-100 shadow-md">
-            <CardHeader className="bg-gradient-to-r from-red-500 to-amber-500 text-white rounded-t-lg">
-              <CardTitle className="text-xl">Seus Dados</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="cpf" className="block text-sm font-medium text-gray-700 mb-1">
-                    CPF
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                    <Input
-                      id="cpf"
-                      placeholder="000.000.000-00"
-                      className="pl-10 border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Telefone
-                  </label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                    <Input
-                      id="telefone"
-                      placeholder="(00) 00000-0000"
-                      className="pl-10 border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    E-mail
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="pl-10 border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="senha" className="block text-sm font-medium text-gray-700 mb-1">
-                    Senha
-                  </label>
-                  <div className="relative">
-                    <ShieldCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                    <Input
-                      id="senha"
-                      type="password"
-                      placeholder="********"
-                      className="pl-10 border-amber-200 focus:border-amber-500 focus:ring-amber-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="pt-4">
-                  <Link href="/fidelidade/confirmacao-cadastro">
-                    <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">Cadastrar</Button>
-                  </Link>
-                </div>
-
-                <div className="text-center text-sm text-gray-500 pt-2">
-                  Já tem cadastro?{" "}
-                  <Link href="/fidelidade/login" className="text-amber-600 hover:underline">
-                    Faça login
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="mt-6 bg-amber-50 rounded-lg p-4 border border-amber-100">
-            <h3 className="font-medium text-amber-700 mb-2">Como funciona o Swift Fidelidade?</h3>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li className="flex items-start">
-                <div className="bg-amber-100 rounded-full p-1 mr-2 mt-0.5 flex-shrink-0">
-                  <div className="bg-amber-500 rounded-full w-2 h-2"></div>
-                </div>
-                <span className="flex-1">Ganhe 10 pontos a cada R$1 gasto nas lojas Swift</span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-amber-100 rounded-full p-1 mr-2 mt-0.5">
-                  <div className="bg-amber-500 rounded-full w-2 h-2"></div>
-                </div>
-                <span>Ganhe 500 pontos ao publicar uma receita no app</span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-amber-100 rounded-full p-1 mr-2 mt-0.5">
-                  <div className="bg-amber-500 rounded-full w-2 h-2"></div>
-                </div>
-                <span>Ganhe 1000 pontos ao organizar um churras com amigos</span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-amber-100 rounded-full p-1 mr-2 mt-0.5">
-                  <div className="bg-amber-500 rounded-full w-2 h-2"></div>
-                </div>
-                <span>Troque seus pontos por descontos nas lojas físicas Swift</span>
-              </li>
-            </ul>
+      <main className="flex-grow-1">
+        <Container className="py-4 pb-5">
+          <div className="mb-4">
+            <Link href="/" passHref>
+              <Button variant="link" className="text-decoration-none text-warning">
+                <ArrowLeft size={16} className="me-2" />
+                Voltar
+              </Button>
+            </Link>
           </div>
-        </div>
+
+          <Row className="justify-content-center">
+            <Col md={6} lg={5}>
+              <h1 className="fs-2 fw-bold text-warning mb-4 d-flex align-items-center">
+                <User size={28} className="me-2 text-warning-emphasis" />
+                Cadastro Swift Fidelidade
+              </h1>
+
+              <Card className="shadow-sm border-warning-subtle">
+                <Card.Header 
+                  className="text-white rounded-top-lg p-3"
+                  style={{ background: 'linear-gradient(to right, var(--bs-primary), var(--bs-warning))' }}
+                >
+                  <Card.Title as="h2" className="fs-5 mb-0">Seus Dados</Card.Title>
+                </Card.Header>
+                <Card.Body className="p-4">
+                  <Form>
+                    <Form.Group className="mb-3" controlId="cpf">
+                      <Form.Label>CPF</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text><User size={16} className="text-muted" /></InputGroup.Text>
+                        <Form.Control type="text" placeholder="000.000.000-00" />
+                      </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="telefone">
+                      <Form.Label>Telefone</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text><Phone size={16} className="text-muted" /></InputGroup.Text>
+                        <Form.Control type="tel" placeholder="(00) 00000-0000" />
+                      </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="email">
+                      <Form.Label>E-mail</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text><Mail size={16} className="text-muted" /></InputGroup.Text>
+                        <Form.Control type="email" placeholder="seu@email.com" />
+                      </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="senha">
+                      <Form.Label>Senha</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text><ShieldCheck size={16} className="text-muted" /></InputGroup.Text>
+                        <Form.Control type="password" placeholder="********" />
+                      </InputGroup>
+                    </Form.Group>
+
+                    <div className="d-grid pt-3">
+                      <Link href="/fidelidade/confirmacao-cadastro" passHref>
+                        <Button variant="warning" type="submit">Cadastrar</Button>
+                      </Link>
+                    </div>
+
+                    <div className="text-center small text-muted pt-4">
+                      Já tem cadastro?{" "}
+                      <Link href="/fidelidade/login" className="text-warning text-decoration-none">
+                        Faça login
+                      </Link>
+                    </div>
+                  </Form>
+                </Card.Body>
+              </Card>
+
+              <Card className="mt-4 bg-warning-subtle border-warning-subtle">
+                <Card.Body>
+                  <h3 className="fw-semibold text-warning-emphasis mb-3">Como funciona o Swift Fidelidade?</h3>
+                  <ListGroup variant="flush">
+                    <ListGroup.Item className="bg-transparent d-flex align-items-start border-0 px-0">
+                      <div className="bg-warning rounded-circle p-1 me-2 mt-1"><div className="bg-warning-emphasis rounded-circle" style={{width: '8px', height: '8px'}}></div></div>
+                      <span>Ganhe 10 pontos a cada R$1 gasto nas lojas Swift</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="bg-transparent d-flex align-items-start border-0 px-0">
+                      <div className="bg-warning rounded-circle p-1 me-2 mt-1"><div className="bg-warning-emphasis rounded-circle" style={{width: '8px', height: '8px'}}></div></div>
+                      <span>Ganhe 500 pontos ao publicar uma receita no app</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="bg-transparent d-flex align-items-start border-0 px-0">
+                      <div className="bg-warning rounded-circle p-1 me-2 mt-1"><div className="bg-warning-emphasis rounded-circle" style={{width: '8px', height: '8px'}}></div></div>
+                      <span>Ganhe 1000 pontos ao organizar um churras com amigos</span>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="bg-transparent d-flex align-items-start border-0 px-0">
+                      <div className="bg-warning rounded-circle p-1 me-2 mt-1"><div className="bg-warning-emphasis rounded-circle" style={{width: '8px', height: '8px'}}></div></div>
+                      <span>Troque seus pontos por descontos nas lojas físicas Swift</span>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </main>
       <Navigation />
     </div>

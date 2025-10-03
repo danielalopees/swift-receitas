@@ -1,148 +1,138 @@
-"use client"
+'use client';
 
 import { useState } from "react"
-import { Search, Bell, Menu, ShoppingCart, User, Home, Award } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link"
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import Dropdown from "react-bootstrap/Dropdown";
+import Badge from "react-bootstrap/Badge";
+import { Search, Bell, Menu, ShoppingCart, User, Home, Award, ChefHat } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
-import { Badge } from "@/components/ui/badge"
-import { motion, AnimatePresence } from "framer-motion"
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { items, getTotalPrice } = useCart()
+  const [showMenu, setShowMenu] = useState(false)
+
+  const handleMenuClose = () => setShowMenu(false)
+  const handleMenuShow = () => setShowMenu(true)
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center">
-          {/* Menu hambúrguer para mobile */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="mr-2 md:hidden text-gray-600">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[80%] sm:w-[300px] pt-12">
-              <div className="flex flex-col h-full">
-                <div className="flex-1 space-y-2">
-                  <Link href="/" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start text-lg">
-                      <Home className="mr-3 h-5 w-5" />
-                      Início
-                    </Button>
-                  </Link>
-                  <Link href="/busca" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start text-lg">
-                      <Search className="mr-3 h-5 w-5" />
-                      Buscar
-                    </Button>
-                  </Link>
-                  <Link href="/ranking" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start text-lg">
-                      <Award className="mr-3 h-5 w-5" />
-                      Ranking
-                    </Button>
-                  </Link>
-                  <Link href="/perfil" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start text-lg">
-                      <User className="mr-3 h-5 w-5" />
-                      Perfil
-                    </Button>
-                  </Link>
-                </div>
-                <div className="pt-4 border-t border-gray-200">
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-sm text-gray-500">Versão 1.0.0</span>
-                    <Link href="/fidelidade/login">
-                      <Button variant="outline" size="sm" className="text-red-600 border-red-200">
-                        Entrar
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+    <Navbar sticky="top" bg="light" className="shadow-sm border-bottom" expand="md">
+      <Container>
+        {/* Mobile Menu Toggle */}
+        <Button variant="link" className="d-md-none text-secondary" onClick={handleMenuShow}>
+          <Menu size={20} />
+        </Button>
 
-          <Link href="/">
-            <div className="flex items-center">
-              <span className="font-semibold text-gray-800 text-lg tracking-wide">
-                <span className="text-red-600">R</span>eceitas
-              </span>
-              <img src="/images/swift-logo.svg" alt="Swift" className="h-6 ml-2" />
+        {/* Brand Logo */}
+        <Navbar.Brand as={Link} href="/" className="d-flex align-items-center">
+          <span className="fw-semibold text-dark fs-5">
+            <span className="text-primary">R</span>eceitas
+          </span>
+          <img src="/images/swift-logo.svg" alt="Swift" style={{ height: '24px' }} className="ms-2" />
+        </Navbar.Brand>
+
+        {/* Desktop Navigation (collapses on mobile) */}
+        <Navbar.Collapse id="main-navbar-nav">
+          <Nav className="me-auto d-none d-md-flex">
+            <Nav.Link as={Link} href="/">Início</Nav.Link>
+            <Nav.Link as={Link} href="/busca">Buscar</Nav.Link>
+            <Nav.Link as={Link} href="/ranking">Ranking</Nav.Link>
+            <Nav.Link as={Link} href="/chef-ia">Chef IA</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+
+        {/* Right-side Icons */}
+        <Nav className="flex-row align-items-center ms-auto ms-md-0">
+          <Nav.Link as={Link} href="/busca" className="d-none d-md-block text-secondary">
+            <Search size={20} />
+          </Nav.Link>
+          <Nav.Link href="#" className="text-secondary">
+            <Bell size={20} />
+          </Nav.Link>
+          <MobileCartButton />
+        </Nav>
+
+        {/* Mobile Offcanvas Menu */}
+        <Offcanvas show={showMenu} onHide={handleMenuClose} placement="start">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Menu</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className="flex-column fs-5">
+              <Nav.Link as={Link} href="/" onClick={handleMenuClose}><Home className="me-3" size={20}/>Início</Nav.Link>
+              <Nav.Link as={Link} href="/busca" onClick={handleMenuClose}><Search className="me-3" size={20}/>Buscar</Nav.Link>
+              <Nav.Link as={Link} href="/ranking" onClick={handleMenuClose}><Award className="me-3" size={20}/>Ranking</Nav.Link>
+              <Nav.Link as={Link} href="/chef-ia" onClick={handleMenuClose}><ChefHat className="me-3" size={20}/>Chef IA</Nav.Link>
+              <Nav.Link as={Link} href="/perfil" onClick={handleMenuClose}><User className="me-3" size={20}/>Perfil</Nav.Link>
+            </Nav>
+            <div className="mt-auto pt-4 border-top">
+                <Link href="/fidelidade/login">
+                  <Button variant="outline-primary" className="w-100">Entrar</Button>
+                </Link>
+                <p className="text-muted small mt-3">Versão 1.0.0</p>
             </div>
-          </Link>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Link href="/busca" className="md:block hidden">
-            <Button variant="ghost" size="icon" className="text-gray-600">
-              <Search className="h-5 w-5" />
-            </Button>
-          </Link>
-          <Button variant="ghost" size="icon" className="text-gray-600">
-            <Bell className="h-5 w-5" />
-          </Button>
-          <MobileCartButton items={items} totalPrice={getTotalPrice()} />
-        </div>
-      </div>
-    </header>
+          </Offcanvas.Body>
+        </Offcanvas>
+      </Container>
+    </Navbar>
   )
 }
 
-function MobileCartButton({ items, totalPrice }: { items: any[]; totalPrice: number }) {
-  const [isCartOpen, setIsCartOpen] = useState(false)
+function MobileCartButton() {
+  const { items, getTotalPrice } = useCart()
 
   return (
-    <div className="relative">
-      <Button variant="ghost" size="icon" className="text-gray-600 relative" onClick={() => setIsCartOpen(!isCartOpen)}>
-        <ShoppingCart className="h-5 w-5" />
-        {items.length > 0 && (
-          <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center bg-red-500">
-            {items.length}
-          </Badge>
-        )}
-      </Button>
+    <Dropdown align="end">
+      <Dropdown.Toggle as="div" bsPrefix="p-0" className="position-relative">
+        <Button variant="link" className="text-secondary">
+          <ShoppingCart size={20} />
+          {items.length > 0 && (
+            <Badge pill bg="primary" className="position-absolute top-0 start-100 translate-middle">
+              {items.length}
+            </Badge>
+          )}
+        </Button>
+      </Dropdown.Toggle>
 
-      <AnimatePresence>
-        {isCartOpen && items.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute right-0 top-full mt-2 w-72 bg-white rounded-lg shadow-lg z-50 overflow-hidden"
-          >
-            <div className="p-3 border-b border-gray-100">
-              <h3 className="font-medium text-gray-800">Seu Carrinho</h3>
-            </div>
-            <div className="max-h-60 overflow-y-auto">
-              {items.map((item) => (
-                <div key={item.id} className="p-3 border-b border-gray-100 flex items-center">
-                  <div className="w-12 h-12 bg-gray-100 rounded-md mr-3 flex-shrink-0">
-                    <img
-                      src={item.image || "/placeholder.svg?height=48&width=48"}
-                      alt={item.name}
-                      className="w-full h-full object-cover rounded-md"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{item.name}</p>
-                    <p className="text-red-600 text-sm">R$ {item.price.toFixed(2).replace(".", ",")}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="p-3 bg-gray-50">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-gray-600">Total:</span>
-                <span className="font-bold text-red-600">R$ {totalPrice.toFixed(2).replace(".", ",")}</span>
+      <Dropdown.Menu style={{ width: '300px' }}>
+        <div className="p-2">
+            <h3 className="fw-medium fs-6">Seu Carrinho</h3>
+        </div>
+        <Dropdown.Divider />
+        <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+          {items.length > 0 ? items.map((item: any) => (
+            <div key={item.id} className="d-flex align-items-center p-2">
+              <img
+                src={item.image || "/placeholder.svg"}
+                alt={item.name}
+                className="rounded me-2"
+                style={{ width: '48px', height: '48px', objectFit: 'cover' }}
+              />
+              <div className="flex-grow-1 text-truncate">
+                <p className="fw-medium small text-truncate mb-0">{item.name}</p>
+                <p className="text-primary small mb-0">R$ {item.price.toFixed(2).replace(".", ",")}</p>
               </div>
-              <Button className="w-full bg-red-600 hover:bg-red-700">Ver Carrinho</Button>
             </div>
-          </motion.div>
+          )) : (
+            <p className="text-muted text-center p-3">Seu carrinho está vazio.</p>
+          )}
+        </div>
+        {items.length > 0 && (
+          <>
+            <Dropdown.Divider />
+            <div className="p-2">
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <span className="text-muted">Total:</span>
+                <span className="fw-bold text-primary">R$ {getTotalPrice().toFixed(2).replace(".", ",")}</span>
+              </div>
+              <Button variant="primary" className="w-100">Ver Carrinho</Button>
+            </div>
+          </>
         )}
-      </AnimatePresence>
-    </div>
+      </Dropdown.Menu>
+    </Dropdown>
   )
 }
