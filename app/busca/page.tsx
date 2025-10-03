@@ -85,11 +85,23 @@ export default function BuscaPage() {
 
 function CategoryButton({ name, image }: { name: string; image: string }) {
   return (
-    <Button variant="outline-secondary" className="h-16 relative overflow-hidden p-0 w-full">
-      <div className="absolute inset-0 bg-black/40 z-10"></div>
-      <img src={image || "/placeholder.svg"} alt={name} className="absolute inset-0 w-full h-full object-cover" />
-      <span className="relative z-20 text-white font-medium">{name}</span>
-    </Button>
+    <div className="card shadow-sm text-decoration-none text-dark text-center">
+      <div className="d-flex justify-content-center pt-3">
+        <img
+          src={image || "/placeholder.jpg"}
+          alt={name}
+          className="rounded"
+          style={{
+            width: '150px',
+            height: '150px',
+            objectFit: 'cover',
+          }}
+        />
+      </div>
+      <div className="card-body">
+        <h3 className="fs-6 fw-medium">{name}</h3>
+      </div>
+    </div>
   )
 }
 
@@ -103,8 +115,17 @@ function IngredientButton({ name }: { name: string }) {
 
 function ChefButton({ name, recipes, avatar }: { name: string; recipes: number; avatar: string }) {
   return (
-    <Button variant="outline-secondary" className="justify-start h-16 w-full flex items-center text-left">
-      <Image src={avatar || "/placeholder.svg"} roundedCircle className="h-10 w-10 mr-3" />
+    <Button variant="outline-secondary" className="justify-start h-auto p-3 w-full flex items-center text-left">
+      <Image
+        src={avatar || "/placeholder-user.jpg"}
+        className="rounded-circle shadow-sm"
+        style={{
+          width: '64px',
+          height: '64px',
+          objectFit: 'cover',
+          marginRight: '1rem'
+        }}
+      />
       <div className="flex flex-col items-start">
         <span className="font-medium">{name}</span>
         <span className="text-xs text-gray-500">{recipes} receitas</span>

@@ -25,7 +25,7 @@ export function StoreMap({ productId }: StoreMapProps) {
     if (!productId) return "#3B82F6" // Azul padrão se não houver produto selecionado
 
     const availability = storeAvailability.find((a) => a.storeId === storeId)
-    return availability?.isAvailable ? "#10B981" : "#EF4444" // Verde se disponível, vermelho se não
+    return availability?.isAvailable ? "#10B981" : "#c2410c" // Verde se disponível, laranja se não
   }
 
   return (

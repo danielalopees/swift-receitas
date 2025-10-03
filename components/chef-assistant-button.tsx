@@ -33,9 +33,9 @@ export function ChefAssistantButton() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 left-4 z-50 flex items-center justify-center w-12 h-12 rounded bg-white border border-gray-300 text-gray-800 shadow hover:shadow-md transition-all"
+        className="fixed bottom-20 right-4 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg hover:shadow-xl transition-all"
       >
-        <ChefHat className="w-6 h-6" />
+        <ChefHat className="h-7 w-7" />
       </motion.button>
 
       <AnimatePresence>{isOpen && <ChefAssistantChat onClose={() => setIsOpen(false)} />}</AnimatePresence>

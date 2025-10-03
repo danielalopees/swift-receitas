@@ -1,17 +1,16 @@
 // Swift Receitas - Custom Bootstrap Theme
 
 // 1. Define custom colors from the project's palette
-$swift-red: #ef4444;
-$swift-red-dark: #b91c1c;
-$swift-amber-dark: #92400e; // For bronze
+$swift-orange: #f97316;
+$swift-orange-dark: #c2410c;
 $swift-slate: #64748b; // For silver/gray
 
 // 2. Override Bootstrap's theme colors
 // We map our brand colors to Bootstrap's semantic names.
-$primary: $swift-red;
-$danger: $swift-red-dark;
+$primary: $swift-orange;
+$danger: $swift-orange-dark;
 $secondary: $swift-slate;
-$warning: $swift-amber-dark;
+$warning: $swift-orange;
 
 // 3. Import Bootstrap to apply the overrides
 // The tilde (~) resolves to the node_modules directory

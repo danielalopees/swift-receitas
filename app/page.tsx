@@ -13,6 +13,9 @@ export default function Home() {
     { id: 1, name: "Picanha Angus Uruguaia", image: "/images/picanha.webp", author: "Maria Silva", authorAvatar: "https://i.pravatar.cc/150?img=5", swiftProducts: ["Picanha Angus Swift", "Sal Grosso Swift"], likes: 345, isLiked: true },
     { id: 2, name: "Strogonoff de Frango", image: "/images/strogonoff.webp", author: "João Pereira", authorAvatar: "https://i.pravatar.cc/150?img=12", swiftProducts: ["Creme de Leite Swift", "Frango Swift"], likes: 245, isLiked: false },
     { id: 3, name: "Feijoada Completa", image: "/images/feijoada.jpeg", author: "Ana Costa", authorAvatar: "https://i.pravatar.cc/150?img=9", swiftProducts: ["Feijão Preto Swift", "Linguiça Swift", "Bacon Swift"], likes: 189, isLiked: true },
+    { id: 4, name: "Lasanha à Bolonhesa", image: "/images/lasanha.jpeg", author: "Carlos Oliveira", authorAvatar: "https://i.pravatar.cc/150?img=11", swiftProducts: ["Carne Moída Swift", "Molho de Tomate Swift"], likes: 432, isLiked: false },
+    { id: 5, name: "Bolo de Chocolate", image: "/images/bolo-chocolate.jpeg", author: "Juliana Santos", authorAvatar: "https://i.pravatar.cc/150?img=1", swiftProducts: ["Ovos Swift", "Farinha de Trigo"], likes: 512, isLiked: true },
+    { id: 6, name: "Risoto de Camarão", image: "/images/risoto-camarao.jpeg", author: "Pedro Martins", authorAvatar: "https://i.pravatar.cc/150?img=7", swiftProducts: ["Camarão Swift", "Arroz Arbóreo"], likes: 289, isLiked: false },
   ]
 
   return (

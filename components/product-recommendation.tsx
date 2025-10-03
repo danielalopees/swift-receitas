@@ -43,41 +43,45 @@ export function ProductRecommendation({ product, onAddToCart }: ProductRecommend
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-      <div className="flex">
-        <div className="w-12 h-12 bg-gray-100 flex-shrink-0">
-          <img
-            src={product.image || "/placeholder.svg?height=48&width=48"}
-            alt={product.name}
-            className="w-full h-full object-cover rounded-md"
-          />
+      <div className="d-flex justify-content-center p-3 bg-light-subtle">
+        <img
+          src={product.image || "/placeholder.jpg"}
+          alt={product.name}
+          className="rounded shadow"
+          style={{
+            width: '200px',
+            height: '200px',
+            objectFit: 'cover',
+          }}
+        />
+      </div>
+
+      <div className="p-3">
+        <div>
+          <h4 className="font-medium text-sm line-clamp-1">{product.name}</h4>
+          <p className="text-xs text-gray-500 line-clamp-1">{product.description}</p>
         </div>
-        <div className="flex-1 p-2 flex flex-col justify-between">
-          <div>
-            <h4 className="font-medium text-sm line-clamp-1">{product.name}</h4>
-            <p className="text-xs text-gray-500 line-clamp-1">{product.description}</p>
-          </div>
-          <div className="flex justify-between items-center mt-1">
-            <span className="font-bold text-red-600">R$ {product.price.toFixed(2).replace(".", ",")}</span>
-            <Button
-              size="sm"
-              variant={isInCart || isAdded ? "outline-success" : "danger"}
-              className={`h-9 px-3 min-w-[80px] touch-manipulation ${isInCart || isAdded ? "border-green-500 text-green-600" : "bg-red-600 hover:bg-red-700"}`}
-              onClick={handleAddToCart}
-              disabled={isInCart || isAdded}
-            >
-              {isInCart || isAdded ? (
-                <>
-                  <Check className="h-3 w-3 mr-1" />
-                  <span className="text-xs">Adicionado</span>
-                </> 
-              ) : (
-                <>
-                  <ShoppingCart className="h-3 w-3 mr-1" />
-                  <span className="text-xs">Adicionar</span>
-                </>
-              )}
-            </Button>
-          </div>
+        <div className="flex justify-between items-center mt-2">
+          <span className="font-bold text-red-600">R$ {product.price.toFixed(2).replace(".", ",")}</span>
+          <Button
+            size="sm"
+            variant={isInCart || isAdded ? "outline-success" : "danger"}
+            className={`h-9 px-3 min-w-[80px] touch-manipulation ${isInCart || isAdded ? "border-green-500 text-green-600" : "bg-red-600 hover:bg-red-700"}`}
+            onClick={handleAddToCart}
+            disabled={isInCart || isAdded}
+          >
+            {isInCart || isAdded ? (
+              <>
+                <Check className="h-3 w-3 mr-1" />
+                <span className="text-xs">Adicionado</span>
+              </> 
+            ) : (
+              <>
+                <ShoppingCart className="h-3 w-3 mr-1" />
+                <span className="text-xs">Adicionar</span>
+              </>
+            )}
+          </Button>
         </div>
       </div>
 
